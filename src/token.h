@@ -3,6 +3,7 @@
 #define C_BLOCK_COMPILER_TOKEN_H
 #include "c_stream.h"
 #include <cstdint>
+#include <set>
 #include <string>
 
 #define MAX_BUFFER_SIZE 2048
@@ -10,9 +11,7 @@
 using namespace std;
 
 namespace C_BLOCK {
-
-    static constexpr size_t double_char_symbol_count = 15;
-    static string double_char_symbols[double_char_symbol_count] = {
+    inline set<string> double_char_symbols = {
         // reserve the 4 basic arithmetic-assign operations + switch operator
         // (IDK why anyone would that last one this anyway, lol)
         "+=",
@@ -113,7 +112,7 @@ namespace C_BLOCK {
         bool is_double_quoted_string(FILE* _file, fpos_t original_pos, c_stream &stream);
         bool is_single_quoted_string(FILE* _file, fpos_t original_pos);
         bool is_single_char_symbol(FILE* _file, fpos_t original_pos);
-        bool is_double_char_symbol(FILE* _file, fpos_t original_pos);
+        static bool is_double_char_symbol(FILE* _file, fpos_t original_pos);
         bool is_loud_identifier(FILE* _file, fpos_t original_pos);
         bool is_shy_identifier(FILE* _file, fpos_t original_pos);
         bool is_reserved_word(FILE* _file, fpos_t original_pos);

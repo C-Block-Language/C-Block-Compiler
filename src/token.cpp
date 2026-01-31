@@ -251,13 +251,11 @@ bool token::is_double_char_symbol(FILE *_file, fpos_t original_pos) {
     buffer[0] = static_cast<char>(getc(_file));
     buffer[1] = static_cast<char>(getc(_file));
 
-    for (uint8_t i = 0; i < double_char_symbol_count - 1 && feof(_file) == 0; ++i) {
-        if (string(buffer) == double_char_symbols[i]) return true;
-    }
 
+    if (double_char_symbols.contains(string(buffer))) return true;
 
-
-    return true;
+    fsetpos(_file, &original_pos);
+    return false;
 
 
 }
