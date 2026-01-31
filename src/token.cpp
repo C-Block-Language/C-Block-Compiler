@@ -225,7 +225,7 @@ bool token::is_bracket(FILE* _file, const fpos_t original_pos) {
 
 }
 
-bool token::is_single_char_symbol(FILE* _file, fpos_t original_pos) {
+bool token::is_single_char_symbol(FILE* _file, const fpos_t original_pos) {
     char buffer[2]; buffer[1] = '\0';
     buffer[0] = static_cast<char>(getc(_file));
 
@@ -246,7 +246,7 @@ bool token::is_single_char_symbol(FILE* _file, fpos_t original_pos) {
 
 }
 
-bool token::is_double_char_symbol(FILE *_file, fpos_t original_pos) {
+bool token::is_double_char_symbol(FILE *_file, const fpos_t original_pos) {
     char buffer[3]; buffer[2] = '\0';
     buffer[0] = static_cast<char>(getc(_file));
     buffer[1] = static_cast<char>(getc(_file));
