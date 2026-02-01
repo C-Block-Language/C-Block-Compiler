@@ -23,10 +23,10 @@ token::token(c_stream &file) {
     fpos_t original_pos;
     fgetpos(_file, &original_pos);
 
-    if (is_single_quoted_string(_file, original_pos))           goto passed;
     if (is_double_quoted_string(_file, original_pos, file))  return; // it already handles the file position (as it's multilined)
-    if (is_single_char_symbol(_file, original_pos))             goto passed;
+    if (is_single_quoted_string(_file, original_pos))           goto passed;
     if (is_double_char_symbol(_file, original_pos))             goto passed;
+    if (is_single_char_symbol(_file, original_pos))             goto passed;
     if (is_bracket(_file, original_pos))                        goto passed;
     if (is_number(_file, original_pos))                         goto passed;
     if (is_reserved_word(_file, original_pos))                  goto passed;
@@ -39,6 +39,61 @@ token::token(c_stream &file) {
     file.move_on_column(token_str.size());
 
 }
+
+#define fail { t_type = MISCELLANEOUS; return; }
+
+token::token(c_stream &file, token_type t) {
+    file.berserk_along_whitespaces_and_comments();
+    pos[1] = file.line();
+    pos[0] = file.column();
+    t_type = WIP;
+
+    FILE* _file = file.stream();
+
+    fpos_t original_pos;
+    fgetpos(_file, &original_pos);
+
+    switch (t) {
+        case DOUBLE_QUOTED_STRING:
+            if (is_double_quoted_string(_file, original_pos, file))  return; // it already handles the file position (as it's multilined)
+            fail;
+        case SINGLE_QUOTED_STRING:
+            if (is_single_quoted_string(_file, original_pos))           goto passed;
+            fail;
+        case DOUBLE_CHAR_SYMBOL:
+            if (is_double_char_symbol(_file, original_pos))             goto passed;
+            fail;
+        case SINGLE_CHAR_SYMBOL:
+            if (is_single_char_symbol(_file, original_pos))             goto passed;
+            fail;
+        case BRACKET_CLOSE: case BRACKET_OPEN:
+            if (is_bracket(_file, original_pos))                        goto passed;
+            fail;
+        case NUMBER:
+            if (is_number(_file, original_pos))                         goto passed;
+            fail;
+        case RESERVED_WORD:
+            if (is_reserved_word(_file, original_pos))                  goto passed;
+            fail;
+        case SHY_IDENTIFIER:
+            if (is_shy_identifier(_file, original_pos))                 goto passed;
+            fail;
+        case LOUD_IDENTIFIER:
+            if (is_loud_identifier(_file, original_pos))                goto passed;
+            fail;
+        case LITERAL:
+            if (is_literal(_file, original_pos))                        goto passed;
+            fail;
+        default:
+            t_type = MISCELLANEOUS;
+            return;
+    }
+    passed:
+    file.move_on_column(token_str.size());
+
+}
+
+#undef fail
 
 inline bool matches_any_reserved_word(const char buffer_char, const size_t i) {
     for (size_t j = 0; j < reserved_word_count - 1; ++j) {

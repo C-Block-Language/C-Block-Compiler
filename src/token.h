@@ -3,7 +3,7 @@
 #define C_BLOCK_COMPILER_TOKEN_H
 #include "c_stream.h"
 #include <cstdint>
-#include <set>
+#include <unordered_set>
 #include <string>
 
 #define MAX_BUFFER_SIZE 2048
@@ -11,7 +11,7 @@
 using namespace std;
 
 namespace C_BLOCK {
-    inline set<string> double_char_symbols = {
+    inline unordered_set<string> double_char_symbols = {
         // reserve the 4 basic arithmetic-assign operations + switch operator
         // (IDK why anyone would that last one this anyway, lol)
         "+=",
@@ -103,6 +103,8 @@ namespace C_BLOCK {
     class token {
     public:
         explicit token(c_stream &file);
+        token(c_stream &file, token_type t);
+
         [[nodiscard]] token_type type() const;
         string content();
         [[nodiscard]] size_t column() const;
