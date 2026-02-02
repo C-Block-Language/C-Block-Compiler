@@ -292,6 +292,7 @@ bool token::is_single_char_symbol(FILE* _file, const fpos_t original_pos) {
     buffer[0] = static_cast<char>(getc(_file));
 
     switch (buffer[0]) {
+        case '\\': case '#':                                // macro linebreak, hashtag
         case ':': case ';': case '.': case ',':             // colon, semicolon, dot & comma
         case '=': case '+': case '-': case '/': case '%':   // arithmetic operators
         case '@':                                           // for selectors & inline starters
