@@ -36,7 +36,7 @@ namespace C_BLOCK {
     private:
         FILE* _file = nullptr;
         /// pos[1] := line,  pos[0] := column
-        size_t pos[2];
+        size_t pos[2] = {1, 1};
     };
 }
 
