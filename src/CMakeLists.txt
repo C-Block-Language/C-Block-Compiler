@@ -12,7 +12,4 @@ add_executable(C_BLOCK_COMPILER main.cpp
         parser/parser.h
         parser/syntax_structure.cpp
         parser/syntax_structure.h
-        parser/substructure/score_holder.cpp
-        parser/substructure/score_source.cpp
-        parser/substructure/objective_id.cpp
 )

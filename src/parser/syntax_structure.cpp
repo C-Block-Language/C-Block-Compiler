@@ -29,6 +29,6 @@ bool syntax_structure::attempt(const syntax_structure_type type) {
         case SCORE_HOLDER:
         case SELECTOR:
         case OBJECTIVE_ID:
-            return attempt_objective_id();
+            break;
     }
 }
