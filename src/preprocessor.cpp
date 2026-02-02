@@ -19,6 +19,7 @@ c_preprocessor::c_preprocessor(vector<token *> &og_tkn_stream) {
         ++token_on_line;
 
 
+        if (attempt_directive(token_on_line, line, i) == true) continue;
     }
 }
 
@@ -46,4 +47,28 @@ token* c_preprocessor::get_next_token(size_t &index) {
         }
     }
     return current_token;
+}
+
+bool c_preprocessor::attempt_directive(const size_t token_on_line, size_t line, size_t &index) {
+
+    if (token_on_line != 0)                                 return false;
+
+    auto hashtag_token = token_stream->at(index);
+    if (hashtag_token->type() != SINGLE_CHAR)               return false;
+    if (hashtag_token->content() != "#")                    return false;
+
+    const auto directive_token = get_next_token(index);
+
+    /// TODO: add a logger & handler for malformed preprocessor linebreaking
+    if (directive_token == nullptr) return false;
+
+    if (directive_token->line() != hashtag_token->line())   return false;
+    if (directive_token->content() == "set")                return set_property(index);
+    if (directive_token->content() == "define")             return define_macro(index);
+    if (directive_token->content() == "include")            return include_file(index);
+    if (directive_token->content() == "undef")              return undefine_macro(index);
+
+    /// TODO: add a logger & handler to indicate a non-existent preprocessor directive
+    return false;
+
 }
