@@ -1,6 +1,8 @@
 
 #include "preprocessor.h"
 
+#include "parser/parser.h"
+
 using namespace C_BLOCK;
 c_preprocessor::c_preprocessor(vector<token *> &og_tkn_stream) {
     this->token_stream = &og_tkn_stream;
@@ -39,10 +41,14 @@ token* c_preprocessor::get_next_token(size_t &index) {
             case SHY_IDENTIFIER:
             case LOUD_IDENTIFIER:
             case LITERAL:
-                if (current_token->line() != line) return nullptr;
+                if (current_token->line() != line) {
+                    --index;
+                    return nullptr;
+                }
                 found_token = true;
                 break;
             default:
+                --index;
                 return nullptr;
         }
     }
