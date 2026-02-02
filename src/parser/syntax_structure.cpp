@@ -3,10 +3,6 @@
 
 using namespace C_BLOCK;
 
-token syntax_structure::read_token() {
-
-}
-
 vector<token*> syntax_structure::tokens() {
     return token_list;
 }
