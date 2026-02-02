@@ -201,6 +201,92 @@ bool token::is_bracket(FILE* _file, const fpos_t original_pos) {
 
 }
 
+bool token::is_number(FILE *_file, fpos_t original_pos) {
+    char buffer[MAX_BUFFER_SIZE]; buffer[MAX_BUFFER_SIZE - 1] = '\0';
+    size_t i = 0;
+
+    bool possible_number = true;
+    bool continue_loop = true;
+
+    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
+        buffer[i] = static_cast<char>(getc(_file));
+        switch (buffer[i]) {
+            case '0': case '1': case '2': case '3':
+            case '4': case '5': case '6': case '7':
+            case '8': case '9':
+                break;
+
+            case '_':
+                if (i != 0) break;
+
+            default:
+                if (i == 0) possible_number = false;
+                ungetc(buffer[i], _file);
+                buffer[i] = '\0';
+                --i;
+                continue_loop = false;
+
+                break;
+        }
+        ++i;
+    }
+
+    if (possible_number == true && buffer[i - 1] != '_') {
+        token_str = string(buffer);
+        t_type = NUMBER;
+        return true;
+    }
+
+    fsetpos(_file, &original_pos);
+    return false;
+
+}
+
+bool token::is_literal(FILE *_file, fpos_t original_pos) {
+    char buffer[MAX_BUFFER_SIZE]; buffer[MAX_BUFFER_SIZE - 1] = '\0';
+    size_t i = 0;
+
+    bool continue_loop = true;
+
+    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
+        buffer[i] = static_cast<char>(getc(_file));
+        switch (buffer[i]) {
+            case ' ': case '\t': case '\n':
+                ungetc(buffer[i], _file);
+                buffer[i] = '\0';
+                continue_loop = false;
+                break;
+
+            default:
+
+                if (isdigit(buffer[i]) && i > 0) break;
+
+                if (!isalpha(buffer[i])) {
+                    ungetc(buffer[i], _file);
+                    buffer[i] = '\0';
+                    --i;
+                    continue_loop = false;
+                    break;
+                }
+
+            case '_':
+                break;
+        }
+        ++i;
+    }
+
+    if (i > 0) {
+        token_str = string(buffer);
+        t_type = LITERAL;
+        return true;
+    }
+
+    fsetpos(_file, &original_pos);
+    return false;
+
+}
+
+
 bool token::is_single_char_symbol(FILE* _file, const fpos_t original_pos) {
     char buffer[2]; buffer[1] = '\0';
     buffer[0] = static_cast<char>(getc(_file));
