@@ -90,8 +90,7 @@ namespace C_BLOCK {
         SHY_IDENTIFIER,
         LOUD_IDENTIFIER,
         LITERAL,
-        SINGLE_CHAR_SYMBOL,
-        DOUBLE_CHAR_SYMBOL,
+        SINGLE_CHAR,
         BRACKET_OPEN,
         BRACKET_CLOSE,
         SINGLE_QUOTED_STRING,
@@ -103,7 +102,6 @@ namespace C_BLOCK {
     class token {
     public:
         explicit token(c_stream &file);
-        token(c_stream &file, token_type t);
 
         [[nodiscard]] token_type type() const;
         string content();
@@ -114,10 +112,8 @@ namespace C_BLOCK {
         bool is_double_quoted_string(FILE* _file, fpos_t original_pos, c_stream &stream);
         bool is_single_quoted_string(FILE* _file, fpos_t original_pos);
         bool is_single_char_symbol(FILE* _file, fpos_t original_pos);
-        static bool is_double_char_symbol(FILE* _file, fpos_t original_pos);
         bool is_loud_identifier(FILE* _file, fpos_t original_pos);
         bool is_shy_identifier(FILE* _file, fpos_t original_pos);
-        bool is_reserved_word(FILE* _file, fpos_t original_pos);
         bool is_bracket(FILE* _file, fpos_t original_pos);
         bool is_number(FILE* _file, fpos_t original_pos);
         bool is_literal(FILE* _file, fpos_t original_pos);

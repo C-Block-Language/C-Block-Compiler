@@ -40,105 +40,7 @@ token::token(c_stream &file) {
 
 }
 
-#define fail { t_type = MISCELLANEOUS; return; }
 
-token::token(c_stream &file, token_type t) {
-    file.berserk_along_whitespaces_and_comments();
-    pos[1] = file.line();
-    pos[0] = file.column();
-    t_type = WIP;
-
-    FILE* _file = file.stream();
-
-    fpos_t original_pos;
-    fgetpos(_file, &original_pos);
-
-    switch (t) {
-        case DOUBLE_QUOTED_STRING:
-            if (is_double_quoted_string(_file, original_pos, file))  return; // it already handles the file position (as it's multilined)
-            fail;
-        case SINGLE_QUOTED_STRING:
-            if (is_single_quoted_string(_file, original_pos))           goto passed;
-            fail;
-        case DOUBLE_CHAR_SYMBOL:
-            if (is_double_char_symbol(_file, original_pos))             goto passed;
-            fail;
-        case SINGLE_CHAR_SYMBOL:
-            if (is_single_char_symbol(_file, original_pos))             goto passed;
-            fail;
-        case BRACKET_CLOSE: case BRACKET_OPEN:
-            if (is_bracket(_file, original_pos))                        goto passed;
-            fail;
-        case NUMBER:
-            if (is_number(_file, original_pos))                         goto passed;
-            fail;
-        case RESERVED_WORD:
-            if (is_reserved_word(_file, original_pos))                  goto passed;
-            fail;
-        case SHY_IDENTIFIER:
-            if (is_shy_identifier(_file, original_pos))                 goto passed;
-            fail;
-        case LOUD_IDENTIFIER:
-            if (is_loud_identifier(_file, original_pos))                goto passed;
-            fail;
-        case LITERAL:
-            if (is_literal(_file, original_pos))                        goto passed;
-            fail;
-        default:
-            t_type = MISCELLANEOUS;
-            return;
-    }
-    passed:
-    file.move_on_column(token_str.size());
-
-}
-
-#undef fail
-
-inline bool matches_any_reserved_word(const char buffer_char, const size_t i) {
-    for (size_t j = 0; j < reserved_word_count - 1; ++j) {
-        if (i > reserved_words[j].size()) continue;
-        if (buffer_char == reserved_words[j][i]) return true;
-    }
-    return false;
-}
-
-bool token::is_reserved_word(FILE* _file, const fpos_t original_pos) {
-    char buffer[MAX_BUFFER_SIZE]; buffer[MAX_BUFFER_SIZE - 1] = '\0';
-
-    size_t i = 0;
-    bool possible_reserved_word = false;
-
-    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE) {
-        buffer[i] = static_cast<char>(getc(_file));
-        switch (buffer[i]) {
-            case ' ': case '\t': case '\n':
-                ungetc(buffer[i], _file);
-                buffer[i] = '\0';
-                i = MAX_BUFFER_SIZE - 1;
-                break;
-            default:
-                possible_reserved_word = matches_any_reserved_word(buffer[i], i);
-        }
-        if (possible_reserved_word == false) break;
-        ++i;
-    }
-
-
-    if (possible_reserved_word == true) {
-        const auto tmp_str = string(buffer);
-        for (size_t j = 0; j < reserved_word_count; ++j) {
-            if (tmp_str != reserved_words[j]) continue;
-            token_str = reserved_words[j];
-            t_type = RESERVED_WORD;
-            return true;
-        }
-    }
-
-    fsetpos(_file, &original_pos);
-    return false;
-
-}
 
 bool token::is_shy_identifier(FILE* _file, const fpos_t original_pos) {
     char buffer[MAX_BUFFER_SIZE]; buffer[MAX_BUFFER_SIZE - 1] = '\0';
@@ -298,20 +200,6 @@ bool token::is_single_char_symbol(FILE* _file, const fpos_t original_pos) {
             fsetpos(_file, &original_pos);
             return false;
     }
-
-}
-
-bool token::is_double_char_symbol(FILE *_file, const fpos_t original_pos) {
-    char buffer[3]; buffer[2] = '\0';
-    buffer[0] = static_cast<char>(getc(_file));
-    buffer[1] = static_cast<char>(getc(_file));
-
-
-    if (double_char_symbols.contains(string(buffer))) return true;
-
-    fsetpos(_file, &original_pos);
-    return false;
-
 
 }
 
