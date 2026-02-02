@@ -12,4 +12,6 @@ add_executable(C_BLOCK_COMPILER main.cpp
         parser/parser.h
         parser/syntax_structure.cpp
         parser/syntax_structure.h
+        preprocessor.cpp
+        preprocessor.h
 )
