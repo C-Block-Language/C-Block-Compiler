@@ -78,3 +78,47 @@ bool c_preprocessor::attempt_directive(const size_t token_on_line, size_t line, 
     return false;
 
 }
+
+bool c_preprocessor::define_macro(size_t &index) {
+    const size_t column = token_stream->at(index)->column();
+    const size_t line = token_stream->at(index)->line();
+
+
+    const auto macro_name = get_next_token(index);
+
+    /// TODO: add a logger & handler for malformed preprocessor linebreaking
+    if (macro_name == nullptr) return false;
+
+    /// TODO: add a logger & handler for missing whitespace for macro identifier
+    if (macro_name->line() == line && macro_name->column() == column) return false;
+
+    switch (macro_name->type()) {
+        case LITERAL:
+        case LOUD_IDENTIFIER:
+        case SHY_IDENTIFIER:
+            if (reserved_words.contains(macro_name->content()))
+                /// TODO: add a logger & handler for invalid macro identifier
+                return false;
+            break;
+        default:
+            /// TODO: add a logger & handler for invalid macro identifier
+            return false;
+    }
+
+    vector<token*> macro_tokens;
+
+    macro_tokens.push_back(get_next_token(index));
+    while (macro_tokens.back() != nullptr) {
+        macro_tokens.push_back(get_next_token(index));
+    }
+
+    macro_tokens.pop_back();
+    --index;
+
+    if (macro_tokens.empty() == true)
+        /// TODO: add a logger & handler for empty macro tokens for replacement
+        return false;
+
+    macro_table.insert(make_pair(macro_name->content(), macro_tokens));
+    return true;
+}
