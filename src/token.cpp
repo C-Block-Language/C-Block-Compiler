@@ -19,16 +19,16 @@ token::token(c_stream &file) {
     t_type = END_OF_FILE;
     FILE* _file = file.stream();
 
+    if (feof(_file)) return;
+
     fpos_t original_pos;
     fgetpos(_file, &original_pos);
 
     if (is_double_quoted_string(_file, original_pos, file))  return; // it already handles the file position (as it's multilined)
     if (is_single_quoted_string(_file, original_pos))           goto passed;
-    if (is_double_char_symbol(_file, original_pos))             goto passed;
     if (is_single_char_symbol(_file, original_pos))             goto passed;
     if (is_bracket(_file, original_pos))                        goto passed;
     if (is_number(_file, original_pos))                         goto passed;
-    if (is_reserved_word(_file, original_pos))                  goto passed;
     if (is_shy_identifier(_file, original_pos))                 goto passed;
     if (is_loud_identifier(_file, original_pos))                goto passed;
     if (is_literal(_file, original_pos))                        goto passed;
@@ -46,6 +46,7 @@ bool token::is_shy_identifier(FILE* _file, const fpos_t original_pos) {
     size_t i = 0;
 
     bool possible_shy_identifier = true;
+    bool continue_loop = true;
 
     while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
         buffer[i] = static_cast<char>(getc(_file));
@@ -94,6 +95,7 @@ bool token::is_loud_identifier(FILE* _file, const fpos_t original_pos) {
     size_t i = 0;
 
     bool possible_loud_identifier = true;
+    bool continue_loop = true;
 
     while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
         buffer[i] = static_cast<char>(getc(_file));
@@ -299,7 +301,7 @@ bool token::is_single_char_symbol(FILE* _file, const fpos_t original_pos) {
         case '^': case '~':                                 // relative & local position symbols
         case '!':                                           // negation symbol
         case '<': case '>':                                 // basic comparisons
-            t_type = SINGLE_CHAR_SYMBOL;
+            t_type = SINGLE_CHAR;
             token_str = string(buffer);
             return true;
         default:
