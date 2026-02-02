@@ -85,8 +85,7 @@ namespace C_BLOCK {
 
 
     enum token_type {
-        WIP,
-        RESERVED_WORD,
+        END_OF_FILE = -1,
         SHY_IDENTIFIER,
         LOUD_IDENTIFIER,
         LITERAL,
@@ -96,7 +95,6 @@ namespace C_BLOCK {
         SINGLE_QUOTED_STRING,
         DOUBLE_QUOTED_STRING,
         NUMBER,
-        MISCELLANEOUS,
     };
 
     class token {
