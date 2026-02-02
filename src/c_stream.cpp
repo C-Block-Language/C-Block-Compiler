@@ -24,9 +24,13 @@ c_stream::c_stream(const char* file) {
 void c_stream::berserk_along_whitespaces_and_comments() {
 
     char buffer[2] = {'\0','\0'};
-    buffer[1] = static_cast<char>(getc(_file));
+    buffer[1] = static_cast<char>(getc(_file));         ++pos[0];
 
-    if (buffer[1] != '/') goto whitespace;
+    if (buffer[1] != '/') {
+        --pos[0];
+        goto whitespace;
+    }
+
 
     comment_start: /// valid comments are '//' & '/* */' kinds
     buffer[0] = buffer[1];
