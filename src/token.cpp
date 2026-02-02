@@ -16,8 +16,7 @@ token::token(c_stream &file) {
     file.berserk_along_whitespaces_and_comments();
     pos[1] = file.line();
     pos[0] = file.column();
-    t_type = WIP;
-
+    t_type = END_OF_FILE;
     FILE* _file = file.stream();
 
     fpos_t original_pos;
@@ -48,28 +47,38 @@ bool token::is_shy_identifier(FILE* _file, const fpos_t original_pos) {
 
     bool possible_shy_identifier = true;
 
-    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE) {
+    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
         buffer[i] = static_cast<char>(getc(_file));
         switch (buffer[i]) {
             case ' ': case '\t': case '\n':
                 ungetc(buffer[i], _file);
                 buffer[i] = '\0';
-                i = MAX_BUFFER_SIZE - 1;
+                continue_loop = false;
                 break;
 
             default:
-                if (!isalpha(buffer[i])) possible_shy_identifier = false;
-                if (!islower(buffer[i])) possible_shy_identifier = false;
-                if (buffer[i] == '_') possible_shy_identifier = true;
-                if (isdigit(buffer[i]) && i > 0) possible_shy_identifier = true;
-                break;
 
+                if (isdigit(buffer[i]) && i > 0) break;
+
+                if (!isalpha(buffer[i])) {
+                    ungetc(buffer[i], _file);
+                    buffer[i] = '\0';
+                    --i;
+                    continue_loop = false;
+                    break;
+                }
+                if (!islower(buffer[i])) {
+                    continue_loop = false;
+                    possible_shy_identifier = false;
+                }
+
+            case '_':
+                break;
         }
-        if (possible_shy_identifier == false) break;
         ++i;
     }
 
-    if (possible_shy_identifier == true) {
+    if (possible_shy_identifier == true && i > 0) {
         token_str = string(buffer);
         t_type = SHY_IDENTIFIER;
         return true;
@@ -86,28 +95,38 @@ bool token::is_loud_identifier(FILE* _file, const fpos_t original_pos) {
 
     bool possible_loud_identifier = true;
 
-    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE) {
+    while (feof(_file) == 0 && i < MAX_BUFFER_SIZE && continue_loop == true) {
         buffer[i] = static_cast<char>(getc(_file));
         switch (buffer[i]) {
             case ' ': case '\t': case '\n':
                 ungetc(buffer[i], _file);
                 buffer[i] = '\0';
-                i = MAX_BUFFER_SIZE - 1;
+                continue_loop = false;
                 break;
 
             default:
-                if (!isalpha(buffer[i])) possible_loud_identifier = false;
-                if (!isupper(buffer[i])) possible_loud_identifier = false;
-                if (buffer[i] == '_') possible_loud_identifier = true;
-                if (isdigit(buffer[i]) && i > 0) possible_loud_identifier = true;
-                break;
 
+                if (isdigit(buffer[i]) && i > 0) break;
+
+                if (!isalpha(buffer[i])) {
+                    ungetc(buffer[i], _file);
+                    buffer[i] = '\0';
+                    --i;
+                    continue_loop = false;
+                    break;
+                }
+                if (islower(buffer[i])) {
+                    continue_loop = false;
+                    possible_loud_identifier = false;
+                }
+
+            case '_':
+                break;
         }
-        if (possible_loud_identifier == false) break;
         ++i;
     }
 
-    if (possible_loud_identifier == true) {
+    if (possible_loud_identifier == true && i > 0) {
         token_str = string(buffer);
         t_type = LOUD_IDENTIFIER;
         return true;
@@ -158,7 +177,7 @@ bool token::is_double_quoted_string(FILE* _file, const fpos_t original_pos, c_st
 
     buffer[i + 1] = '\0';
     token_str = string(buffer);
-    t_type = SINGLE_QUOTED_STRING;
+    t_type = DOUBLE_QUOTED_STRING;
     return true;
 }
 
