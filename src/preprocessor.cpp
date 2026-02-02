@@ -122,3 +122,9 @@ bool c_preprocessor::define_macro(size_t &index) {
     macro_table.insert(make_pair(macro_name->content(), macro_tokens));
     return true;
 }
+
+bool c_preprocessor::undefine_macro(size_t &index) {
+    const auto macro_name = get_next_token(index);
+    macro_table.erase(macro_name->content());
+    return true;
+}
