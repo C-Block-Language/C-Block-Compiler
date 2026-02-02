@@ -11,36 +11,7 @@
 using namespace std;
 
 namespace C_BLOCK {
-    inline unordered_set<string> double_char_symbols = {
-        // reserve the 4 basic arithmetic-assign operations + switch operator
-        // (IDK why anyone would that last one this anyway, lol)
-        "+=",
-        "-=",
-        "*=",
-        "/=",
-        "%=",
-        "><",
-
-        // reserve comparisons
-        ">=",
-        "<=",
-        "==",
-        "!=",
-
-        // reserve the ++ & -- operators;
-        "++",
-        "--",
-
-        // reserve the store/modify operator
-        "<-",
-
-        // reserve logic operators
-        "&&",
-        "||"
-    };
-
-    static constexpr size_t reserved_word_count = 28;
-    static string reserved_words[reserved_word_count] = {
+    inline unordered_set<string> reserved_words = {
         // Reserve all modifier execute sub-commands
         "execute",
         "if",
