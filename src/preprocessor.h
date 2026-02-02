@@ -10,7 +10,7 @@
 namespace C_BLOCK {
     class c_preprocessor {
     public:
-        token* get_next_token(size_t index);
+        token* get_next_token(size_t &index);
 
         bool attempt_directive(size_t token_on_line, size_t line, size_t& index);
 

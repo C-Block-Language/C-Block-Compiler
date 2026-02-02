@@ -21,3 +21,29 @@ c_preprocessor::c_preprocessor(vector<token *> &og_tkn_stream) {
 
     }
 }
+
+token* c_preprocessor::get_next_token(size_t &index) {
+
+    size_t line = token_stream->at(index)->line();
+
+    token* current_token = nullptr;
+
+    bool found_token = false;
+    while (found_token == false) {
+        ++index;
+        current_token = token_stream->at(index);
+        switch (current_token->type()) {
+            case SINGLE_CHAR:
+                if (current_token->content() == "\\") { ++line; continue; }
+            case SHY_IDENTIFIER:
+            case LOUD_IDENTIFIER:
+            case LITERAL:
+                if (current_token->line() != line) return nullptr;
+                found_token = true;
+                break;
+            default:
+                return nullptr;
+        }
+    }
+    return current_token;
+}
