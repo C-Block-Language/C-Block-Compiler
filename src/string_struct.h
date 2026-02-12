@@ -75,4 +75,15 @@ void erase_string(STRING* _target_struct);
 * @returns `OK` if successful, an ERR signal otherwise.
 */
 STR_LOG str_reserve(STRING* _target_struct, size_t size);
+
+
+
+
+/**
+* @brief Deletes N characters from the back of a string struct.
+* @tparam STRING* target
+* @param [in] _target_struct pointer to the string struct to be affected.
+* @param [in] N amount of characters to erase from the back.
+*/
+void str_pop_back(STRING* _target_struct, size_t N);
 #endif

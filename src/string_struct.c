@@ -62,3 +62,14 @@ STR_LOG str_reserve(STRING* _target_struct, const size_t size) {
     _target_struct->str = new_ptr;
     return OK;
 }
+
+
+
+void str_pop_back(STRING* _target_struct, const size_t N) {
+    if (N > _target_struct->length) {
+        erase_string(_target_struct);
+        return;
+    }
+    _target_struct->length -= N;
+    _target_struct->str[_target_struct->length + 1] = '\0';
+}
