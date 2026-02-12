@@ -47,4 +47,13 @@ void free_string(STRING* _target_struct);
 * @returns string length as `size_t` data type.
 */
 size_t string_len(const STRING* target);
+
+
+
+
+/**
+ * @brief Erases the content (without freeing memory) of a string struct
+ * @param [in] _target_struct pointer to the string struct to be affected.
+ */
+void erase_string(STRING* _target_struct);
 #endif

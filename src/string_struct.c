@@ -36,3 +36,10 @@ void free_string(STRING* _target_struct) {
 size_t string_len(const STRING* target) {
     return target->length;
 }
+
+
+
+void erase_string(STRING* _target_struct) {
+    _target_struct->length = 0;
+    _target_struct->str[0] = '\0';
+}
