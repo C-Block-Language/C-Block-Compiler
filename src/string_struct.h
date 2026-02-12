@@ -97,4 +97,19 @@ void str_pop_back(STRING* _target_struct, size_t N);
  * @returns `OK` if successful, an ERR otherwise.
  */
 STR_LOG append_str(STRING* _target_struct, const char* _str);
+
+
+
+
+/**
+* @brief Compares two string structs.
+* @param _struct1 pointer to first string struct to compare with.
+* @param _struct2 pointer to second string struct to compare with.
+* @returns `OK` if the strings are equal, `DIFF` otherwise.
+*/
+STR_LOG compare_string(const STRING* _struct1, const STRING* _struct2);
+
+
+
+
 #endif
