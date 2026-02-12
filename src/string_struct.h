@@ -25,4 +25,11 @@ typedef enum {
     DIFF
 } STR_LOG;
 
+/**
+ * @brief Converts a primitive char array (null-terminated) into a string struct.
+ * @param [in] _target_struct string struct to be affected.
+ * @param [in] _str primitive array of characters to append.
+ * @returns `OK` if successful, an ERR signal otherwise.
+ */
+STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str);
 #endif
