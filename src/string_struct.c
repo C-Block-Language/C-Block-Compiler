@@ -21,3 +21,12 @@ STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
     (void)memcpy(_target_struct->str, _str, sizeof(char) * (_target_struct->length + 1));
     return OK;
 }
+
+
+
+void free_string(STRING* _target_struct) {
+    free(_target_struct->str);
+    _target_struct->str = nullptr;
+    _target_struct->length = 0;
+    _target_struct->buffer = 1;
+}
