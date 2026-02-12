@@ -30,3 +30,9 @@ void free_string(STRING* _target_struct) {
     _target_struct->length = 0;
     _target_struct->buffer = 1;
 }
+
+
+
+size_t string_len(const STRING* target) {
+    return target->length;
+}

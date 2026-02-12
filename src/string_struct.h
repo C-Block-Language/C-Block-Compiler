@@ -37,4 +37,14 @@ STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str);
 * @param [in] _target_struct string struct to be deleted.
 */
 void free_string(STRING* _target_struct);
+
+
+
+
+/**
+* @brief Returns string size from a string struct.
+* @param [in] target pointer to the string struct to access its length.
+* @returns string length as `size_t` data type.
+*/
+size_t string_len(const STRING* target);
 #endif
