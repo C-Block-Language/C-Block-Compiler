@@ -52,7 +52,7 @@ STR_LOG str_reserve(STRING* _target_struct, const size_t size) {
     const size_t recv_buffer = _target_struct->_buff;
     while (_target_struct->_buff < size + 1) _target_struct->_buff <<= 1;
 
-    char* new_ptr = realloc(_target_struct->str, _target_struct->buffer);
+    char* new_ptr = realloc(_target_struct->str, _target_struct->_buff);
 
     if (new_ptr == nullptr) {
         _target_struct->_buff = recv_buffer;
