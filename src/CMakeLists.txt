@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 23)
 
 add_executable(C_BLOCK_COMPILER
         main.c
+        string_struct.c
+        string_struct.h
 )
