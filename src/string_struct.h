@@ -86,4 +86,15 @@ STR_LOG str_reserve(STRING* _target_struct, size_t size);
 * @param [in] N amount of characters to erase from the back.
 */
 void str_pop_back(STRING* _target_struct, size_t N);
+
+
+
+
+/**
+ * @brief Appends the contents from a primitive char array (null-terminated) to a string struct.
+ * @param _target_struct pointer to string struct to be appended.
+ * @param _str primitive char array to append into the string struc.
+ * @returns `OK` if successful, an ERR otherwise.
+ */
+STR_LOG append_str(STRING* _target_struct, const char* _str);
 #endif

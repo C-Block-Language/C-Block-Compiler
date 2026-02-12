@@ -73,3 +73,12 @@ void str_pop_back(STRING* _target_struct, const size_t N) {
     _target_struct->length -= N;
     _target_struct->str[_target_struct->length + 1] = '\0';
 }
+
+STR_LOG append_str(STRING *_target_struct, const char *_str) {
+    const size_t len = strlen(_str);
+    if (str_reserve(_target_struct, _target_struct->length + len) == ERR_MEM) return ERR_MEM;
+
+    (void)memcpy(_target_struct->str + _target_struct->length, _str, len + 1);
+    _target_struct->length += len;
+    return OK;
+}
