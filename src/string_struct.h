@@ -6,9 +6,9 @@
 #include <stddef.h>
 
 typedef struct {
-    char *str;
+    char* str;
     size_t length;
-    size_t buffer;
+    size_t _buff;
 } STRING;
 
 typedef enum {

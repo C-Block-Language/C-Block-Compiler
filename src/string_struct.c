@@ -6,7 +6,7 @@
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
     if (_target_struct->str == nullptr) {
         _target_struct->length = 0;
-        _target_struct->buffer = 1;
+        _target_struct->_buff = 1;
     }
 
     const size_t recv_length = _target_struct->length;
@@ -28,7 +28,7 @@ void free_string(STRING* _target_struct) {
     free(_target_struct->str);
     _target_struct->str = nullptr;
     _target_struct->length = 0;
-    _target_struct->buffer = 1;
+    _target_struct->_buff = 1;
 }
 
 
@@ -47,15 +47,15 @@ void erase_string(STRING* _target_struct) {
 
 
 STR_LOG str_reserve(STRING* _target_struct, const size_t size) {
-    if (_target_struct->buffer >= size) return OK;
+    if (_target_struct->_buff > size) return OK;
 
-    const size_t recv_buffer = _target_struct->buffer;
-    while (_target_struct->buffer < size) _target_struct->buffer <<= 1;
+    const size_t recv_buffer = _target_struct->_buff;
+    while (_target_struct->_buff < size + 1) _target_struct->_buff <<= 1;
 
     char* new_ptr = realloc(_target_struct->str, _target_struct->buffer);
 
     if (new_ptr == nullptr) {
-        _target_struct->buffer = recv_buffer;
+        _target_struct->_buff = recv_buffer;
         return ERR_MEM;
     }
 
