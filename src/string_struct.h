@@ -25,6 +25,9 @@ typedef enum {
     DIFF
 } STR_LOG;
 
+
+
+
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.
@@ -32,6 +35,10 @@ typedef enum {
  * @returns `OK` if successful, an ERR signal otherwise.
  */
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str);
+
+
+
+
 /**
 * @brief Frees the content of a string struct.
 * @param [in] _target_struct string struct to be deleted.
@@ -56,4 +63,16 @@ size_t string_len(const STRING* target);
  * @param [in] _target_struct pointer to the string struct to be affected.
  */
 void erase_string(STRING* _target_struct);
+
+
+
+
+/**
+* @brief Reserves capacity of a string struct (to save memory reallocations).
+* @tparam STRING* target
+* @param [in] _target_struct pointer to the string struct to be affected.
+* @param [in] size size in characters of characters to at least reserve.
+* @returns `OK` if successful, an ERR signal otherwise.
+*/
+STR_LOG str_reserve(STRING* _target_struct, size_t size);
 #endif
