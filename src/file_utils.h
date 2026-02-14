@@ -20,4 +20,13 @@ void jump_n_skip(STR_PTR* _target_ptr, size_t _args_count, ...);
 
 
 
+/**
+ * @brief Writes all of a file content into a string struct.
+ * @param _file file stream pointer to iterate over.
+ * @param _target_struct string struct to save all file content.
+ */
+void file_to_str_struct(FILE* _file, STRING* _target_struct);
+
+
+
 #endif

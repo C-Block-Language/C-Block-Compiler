@@ -36,3 +36,27 @@ void jump_n_skip(STR_PTR* _target_ptr, const size_t _args_count, ...) {
     } while (c != '\0');
 
 }
+
+
+void file_to_str_struct(FILE* _file, STRING* _target_struct) {
+    fseek(_file, 0, SEEK_SET);
+
+    while (!feof(_file)) {
+        char page[PAGE_SIZE + 1] = {};
+
+        int c = 0;
+        size_t iter = 0;
+        do {
+            c = fgetc(_file);
+            if (c == EOF) break;
+            page[iter] = (char) c;
+            ++iter;
+        } while (iter < PAGE_SIZE);
+
+        page[iter] = '\0';
+        append_str(_target_struct, page);
+
+    }
+}
+
+
