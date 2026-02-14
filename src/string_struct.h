@@ -107,7 +107,8 @@ STR_LOG append_str(STRING* _target_struct, const char* _str);
 * @param _struct2 pointer to second string struct to compare with.
 * @returns `OK` if the strings are equal, `DIFF` otherwise.
 */
-STR_LOG compare_string(const STRING* _struct1, const STRING* _struct2);
+STR_LOG compare_strings(const STRING* _struct1, const STRING* _struct2);
+
 
 
 

@@ -96,19 +96,21 @@ STR_LOG append_str(STRING *_target_struct, const char *_str) {
 }
 
 
-STR_LOG compare_string(const STRING* _struct1, const STRING* _struct2) {
-    if (_struct1->length != _struct2->length) return DIFF;
 
-    const char* str1 = _struct1->str;
-    const char* str2 = _struct2->str;
 
-    const size_t str_byte_len = _struct1->length * sizeof(char);
+STR_LOG compare_strings(const STRING* _struct1, const STRING* _struct2) {
+    if (_struct1->_len != _struct2->_len) return DIFF;
+
+    const char* str1 = _struct1->_str;
+    const char* str2 = _struct2->_str;
+
+    const size_t str_byte_len = _struct1->_len * sizeof(char);
     const size_t len_in_blocks = str_byte_len / sizeof(size_t);
 
     size_t block1 = 0;  size_t block2 = 0;
     for (size_t i = 0; i < len_in_blocks; ++i) {
-        memcpy(&block1, &str1[i * CHR_PER_SIZE_T], sizeof(size_t));     // I suppose a faster way to do string comparison
-        memcpy(&block2, &str2[i * CHR_PER_SIZE_T], sizeof(size_t));
+        (void) memcpy(&block1, &str1[i * CHR_PER_SIZE_T], sizeof(size_t));     // I suppose a faster way to do string comparison
+        (void) memcpy(&block2, &str2[i * CHR_PER_SIZE_T], sizeof(size_t));
 
         if (block1 != block2) return DIFF;
     }
@@ -117,14 +119,15 @@ STR_LOG compare_string(const STRING* _struct1, const STRING* _struct2) {
     const size_t alrdy_comp_chars = len_in_blocks * CHR_PER_SIZE_T;
     const size_t leftover_bytes = str_byte_len - alrdy_comp_chars;
 
+    if (leftover_bytes == 0) return OK;
+
     size_t leftover_str1 = 0;
     size_t leftover_str2 = 0;
 
-    (void)memcpy(&leftover_str1, &str1[alrdy_comp_chars], leftover_bytes);
-    (void)memcpy(&leftover_str2, &str2[alrdy_comp_chars], leftover_bytes);
+    (void) memcpy(&leftover_str1, &str1[alrdy_comp_chars], leftover_bytes);
+    (void) memcpy(&leftover_str2, &str2[alrdy_comp_chars], leftover_bytes);
 
     if (leftover_str1 != leftover_str2) return DIFF;
-
 
     return OK;
 }
