@@ -131,6 +131,25 @@ STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
 
 
 
+STR_LOG str_ptrt_struct(STRING* _target_struct, const STR_PTR* _start, const STR_PTR* _end) {
+    assert(_target_struct != nullptr);                  /* Can't operate on the null pointer.           */
+    assert(_start != nullptr);                          /* Can't be null pointer.                       */
+    assert(_end != nullptr);                            /* Can't be null pointer.                       */
+    assert(_start->_str_struct != nullptr);             /* The start string pointer must not be null.   */
+    assert(_end->_str_struct != nullptr);               /* The ending string pointer must not be null.  */
+    assert(_start->_str_struct == _end->_str_struct);   /* The pointers must be over the same struct.   */
+    assert(_start->_index < _end->_index);              /* The pointers must be on the correct sense.   */
+
+    const size_t start_index = _start->_index;
+    const size_t end_index = _end->_index;
+
+    const size_t len = end_index - start_index;
+    if (str_reserve(_target_struct, len + 1) == ERR_MEM) return ERR_MEM;
+
+    _target_struct->_len = len;
+    (void) memcpy(_target_struct->_str, &_start->_str_struct->_str[start_index], sizeof(char) * len);
+
+    _target_struct->_str[len] = '\0';
     return OK;
 }
 

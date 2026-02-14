@@ -116,7 +116,14 @@ void end_line(STR_PTR *_target_ptr);
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str);
 
 
-
+/**
+ * @brief Takes two string pointers & converts the string within the two into a string struct.
+ * @param _target_struct string struct to be affected.
+ * @param _start string pointer to the start of the string.
+ * @param _end string pointer to the end of the string.
+ * @returns `OK` if successful, an ERR signal otherwise.
+ */
+STR_LOG str_ptrt_struct(STRING* _target_struct, const STR_PTR* _start, const STR_PTR* _end);
 
 /**
 * @brief Frees the content of a string struct.
