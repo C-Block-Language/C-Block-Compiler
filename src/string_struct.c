@@ -121,16 +121,16 @@ STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
         _target_struct->_buff = 1;
     }
 
-    const size_t recv_length = _target_struct->length;
+    const size_t len = strlen(_str);
+    if (str_reserve(_target_struct, len + 1) == ERR_MEM) return ERR_MEM;
+
+    _target_struct->_len = len;
+    (void) memcpy(_target_struct->_str, _str, sizeof(char) * (_target_struct->_len + 1));
+    return OK;
+}
 
 
-    _target_struct->length = strlen(_str);
-    if (str_reserve(_target_struct, _target_struct->length) == ERR_MEM) {
-        _target_struct->length = recv_length;
-        return ERR_MEM;
-    }
 
-    (void)memcpy(_target_struct->str, _str, sizeof(char) * (_target_struct->length + 1));
     return OK;
 }
 
