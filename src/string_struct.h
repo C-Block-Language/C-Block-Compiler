@@ -86,6 +86,15 @@ char advance_char(STR_PTR* _target_ptr);
  * @note If the start index is reached, the pointer will stall on the start index.
  */
 char recoil_char(STR_PTR* _target_ptr);
+
+
+
+
+/**
+ * @brief Rolls back a string pointer to the start of the current line.
+ * @param [in] _target_ptr string pointer to operate on.
+ */
+void carriage_return(STR_PTR* _target_ptr);
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.
