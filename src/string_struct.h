@@ -198,5 +198,10 @@ STR_LOG compare_strings(const STRING* _struct1, const STRING* _struct2);
 
 
 
+/**
+ * @brief Moves a string pointer to the start of the next line.
+ * @param _target_ptr pointer to the string pointer to be operated.
+ */
+#define next_line(_target_ptr) {end_line(_target_ptr); (void) advance_char(_target_ptr);}
 
 #endif
