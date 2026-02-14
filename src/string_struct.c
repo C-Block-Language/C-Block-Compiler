@@ -51,6 +51,40 @@ char advance_char(STR_PTR *_target_ptr) {
     return c;
 
 }
+
+
+
+
+char recoil_char(STR_PTR *_target_ptr) {
+    assert(_target_ptr != nullptr);                 /* Can't operate on the null pointer.           */
+    assert(_target_ptr->_str_struct != nullptr);    /* Can't operate on non-null string pointers.   */
+
+
+    const auto str = _target_ptr->_str_struct->_str;    // pointers to avoid a '->' hell
+    const auto index = &_target_ptr->_index;
+    const auto column = &_target_ptr->_column;
+
+    if (*index == 0) return str[0];
+
+    --*index;
+    --*column;
+
+    const char c = str[*index];                         // same here xd
+    if (c != '\n') return c;
+    if (*index == 0) return c;
+
+    size_t catch_column = 1;
+    size_t tmp_index = *index - 1;
+    while (str[tmp_index] != '\n' && tmp_index > 0) {
+        ++catch_column;
+        --tmp_index;
+    }
+
+    *column = catch_column;
+    --_target_ptr->_line;
+    return '\n';
+
+}
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
     if (_target_struct->_str == nullptr) {
         _target_struct->_len = 0;

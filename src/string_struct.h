@@ -75,6 +75,17 @@ void assg_str_ptr(STR_PTR* _target_ptr, STRING* _str_struct);
  * @note If it reaches end of string, it will return the null terminator & not advance more.
  */
 char advance_char(STR_PTR* _target_ptr);
+
+
+
+
+/**
+ * @brief Moves back one character on a string pointer.
+ * @param [in] _target_ptr string pointer to operate on.
+ * @returns the character where the pointer is at after moving back.
+ * @note If the start index is reached, the pointer will stall on the start index.
+ */
+char recoil_char(STR_PTR* _target_ptr);
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.
