@@ -25,7 +25,7 @@ typedef enum {
     DIFF
 } STR_LOG;
 
-#define EMPTY_STR {.str = nullptr, ._buff = 1, .length = 0}
+#define EMPTY_STR (STRING){._str = nullptr, ._buff = 1, ._len = 0}
 
 
 /**
