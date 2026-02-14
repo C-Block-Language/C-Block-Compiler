@@ -204,4 +204,14 @@ STR_LOG compare_strings(const STRING* _struct1, const STRING* _struct2);
  */
 #define next_line(_target_ptr) {end_line(_target_ptr); (void) advance_char(_target_ptr);}
 
+
+
+
+/**
+ * @brief Moves a string pointer to the start of the previous line.
+ * @param _target_ptr pointer to the string pointer to be operated.
+ */
+#define previous_line(_target_ptr) {carriage_return(_target_ptr); (void) recoil_char(_target_ptr); carriage_return(_target_ptr);}
+
+
 #endif
