@@ -25,8 +25,26 @@ typedef enum {
     DIFF
 } STR_LOG;
 
+
+
+
+/**
+ * @brief A fail-safe pointer to iterate in & out of a string struct.
+ */
+typedef struct {
+    STRING* _str_struct;
+    size_t _index;
+    size_t _line;
+    size_t _column;
+} STR_PTR;
+
+
 #define EMPTY_STR (STRING){._str = nullptr, ._buff = 1, ._len = 0}
 
+/**
+ * @brief An initialiser macro helper for a null string pointer.
+ */
+#define NULL_STR_PTR (STR_PTR){._str_struct = nullptr, ._index = 0, ._line = 1, ._column = 1}
 
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
