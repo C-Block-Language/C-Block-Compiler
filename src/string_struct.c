@@ -96,6 +96,25 @@ void carriage_return(STR_PTR *_target_ptr) {
     while (recoil_char(_target_ptr) != '\n' && _target_ptr->_index > 0) {}
     (void) advance_char(_target_ptr);
 }
+
+
+
+void end_line(STR_PTR *_target_ptr) {
+    assert(_target_ptr != nullptr);                 /* Can't operate on the null pointer.           */
+    assert(_target_ptr->_str_struct != nullptr);    /* Can't operate on non-null string pointers.   */
+
+    char c;
+
+    do c = advance_char(_target_ptr);
+    while (c != '\n' && c != '\0');
+
+    if (c == '\n') return (void) recoil_char(_target_ptr);
+    (void) advance_char(_target_ptr);
+}
+
+
+
+
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
     if (_target_struct->_str == nullptr) {
         _target_struct->_len = 0;

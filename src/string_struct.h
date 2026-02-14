@@ -95,6 +95,18 @@ char recoil_char(STR_PTR* _target_ptr);
  * @param [in] _target_ptr string pointer to operate on.
  */
 void carriage_return(STR_PTR* _target_ptr);
+
+
+
+
+/**
+ * @brief Jumps a string pointer to the end of the line.
+ * @param [in] _target_ptr string pointer to operate on.
+ * @note If the pointer is on the last line of the string, it will be moved to the end of the string.
+ */
+void end_line(STR_PTR *_target_ptr);
+
+
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.
