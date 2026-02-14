@@ -5,11 +5,17 @@
 
 #include <stddef.h>
 
+
+
+
 typedef struct {
     char* _str;
     size_t _len;
     size_t _buff;
 } STRING;
+
+
+
 
 typedef enum {
     /// Good to continue.
@@ -39,6 +45,9 @@ typedef struct {
 } STR_PTR;
 
 
+/**
+ * @brief An initialiser macro helper for an empty string struct.
+ */
 #define EMPTY_STR (STRING){._str = nullptr, ._buff = 1, ._len = 0}
 
 /**
