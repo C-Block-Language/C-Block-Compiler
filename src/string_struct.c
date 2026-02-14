@@ -14,8 +14,8 @@ constexpr size_t CHR_PER_SIZE_T = sizeof(size_t) / sizeof(char);
 
 
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
-    if (_target_struct->str == nullptr) {
-        _target_struct->length = 0;
+    if (_target_struct->_str == nullptr) {
+        _target_struct->_len = 0;
         _target_struct->_buff = 1;
     }
 
@@ -35,23 +35,25 @@ STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
 
 
 void free_string(STRING* _target_struct) {
-    free(_target_struct->str);
-    _target_struct->str = nullptr;
-    _target_struct->length = 0;
+    free(_target_struct->_str);
+    _target_struct->_str = nullptr;
+    _target_struct->_len = 0;
     _target_struct->_buff = 1;
 }
 
 
 
+
 size_t string_len(const STRING* target) {
-    return target->length;
+    return target->_len;
 }
 
 
 
+
 void erase_string(STRING* _target_struct) {
-    _target_struct->length = 0;
-    _target_struct->str[0] = '\0';
+    _target_struct->_len = 0;
+    _target_struct->_str[0] = '\0';
 }
 
 
@@ -76,20 +78,20 @@ STR_LOG str_reserve(STRING* _target_struct, const size_t size) {
 
 
 void str_pop_back(STRING* _target_struct, const size_t N) {
-    if (N > _target_struct->length) {
+    if (N > _target_struct->_len) {
         erase_string(_target_struct);
         return;
     }
-    _target_struct->length -= N;
-    _target_struct->str[_target_struct->length + 1] = '\0';
+    _target_struct->_len -= N;
+    _target_struct->_str[_target_struct->_len + 1] = '\0';
 }
 
 STR_LOG append_str(STRING *_target_struct, const char *_str) {
     const size_t len = strlen(_str);
     if (str_reserve(_target_struct, _target_struct->length + len) == ERR_MEM) return ERR_MEM;
 
-    (void)memcpy(_target_struct->str + _target_struct->length, _str, len + 1);
-    _target_struct->length += len;
+    (void) memcpy(_target_struct->_str + _target_struct->_len, _str, len + 1);
+    _target_struct->_len += len;
     return OK;
 }
 

@@ -6,8 +6,8 @@
 #include <stddef.h>
 
 typedef struct {
-    char* str;
-    size_t length;
+    char* _str;
+    size_t _len;
     size_t _buff;
 } STRING;
 
