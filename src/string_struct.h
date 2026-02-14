@@ -64,6 +64,17 @@ typedef struct {
  * @param [in] _str_struct string struct that will be assigned.
  */
 void assg_str_ptr(STR_PTR* _target_ptr, STRING* _str_struct);
+
+
+
+
+/**
+ * @brief Advances one character on a string pointer.
+ * @param [in] _target_ptr string pointer to operate on.
+ * @returns the character advanced.
+ * @note If it reaches end of string, it will return the null terminator & not advance more.
+ */
+char advance_char(STR_PTR* _target_ptr);
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.
