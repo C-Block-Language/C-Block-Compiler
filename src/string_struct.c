@@ -179,20 +179,28 @@ void erase_string(STRING* _target_struct) {
 
 
 
+
 STR_LOG str_reserve(STRING* _target_struct, const size_t size) {
-    if (_target_struct->_buff > size) return OK;
+    if (_target_struct->_buff > size && size != 0) return OK;
 
     const size_t recv_buffer = _target_struct->_buff;
     while (_target_struct->_buff < size + 1) _target_struct->_buff <<= 1;
 
-    char* new_ptr = realloc(_target_struct->str, _target_struct->_buff);
+    char* new_ptr = realloc(_target_struct->_str, sizeof(char) * _target_struct->_buff);
+
 
     if (new_ptr == nullptr) {
         _target_struct->_buff = recv_buffer;
         return ERR_MEM;
     }
 
-    _target_struct->str = new_ptr;
+
+
+
+    _target_struct->_str = new_ptr;
+
+    if (_target_struct->_len == 0) _target_struct->_str[0] = '\0';
+
     return OK;
 }
 
