@@ -55,6 +55,15 @@ typedef struct {
  */
 #define NULL_STR_PTR (STR_PTR){._str_struct = nullptr, ._index = 0, ._line = 1, ._column = 1}
 
+
+
+
+/**
+ * @brief Assigns the start index of a string struct.
+ * @param [in] _target_ptr string pointer to be assigned.
+ * @param [in] _str_struct string struct that will be assigned.
+ */
+void assg_str_ptr(STR_PTR* _target_ptr, STRING* _str_struct);
 /**
  * @brief Converts a primitive char array (null-terminated) into a string struct.
  * @param [in] _target_struct string struct to be affected.

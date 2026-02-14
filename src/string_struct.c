@@ -3,6 +3,7 @@
 
 #include "string_struct.h"
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,6 +14,17 @@ constexpr size_t CHR_PER_SIZE_T = sizeof(size_t) / sizeof(char);
 
 
 
+
+void assg_str_ptr(STR_PTR *_target_ptr, STRING *_str_struct) {
+    assert(_target_ptr != nullptr);                 /* Can't operate on the null pointer.           */
+    assert(_str_struct != nullptr);                 /* Can't operate on the null pointer.           */
+    assert(_target_ptr->_str_struct == nullptr);    /* Can't operate on non-null string pointers.   */
+
+    _target_ptr->_str_struct = _str_struct;
+    _target_ptr->_index = 0;
+    _target_ptr->_line = 1;
+    _target_ptr->_column = 1;
+}
 STR_LOG char_arrt_struct(STRING* _target_struct, const char* _str) {
     if (_target_struct->_str == nullptr) {
         _target_struct->_len = 0;
