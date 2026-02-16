@@ -1,5 +1,49 @@
 
 
+#include "../file/utils.h"
+#include "stream/operations.h"
+#include "fms.h"
+
+#include <assert.h>
+#include <stdint.h>
+
+
+
+TOKEN_STREAM tokenisator_fsm(STRING *_file_str) {
+    auto file_str = NULL_STR_PTR;
+    auto token_stream = EMPTY_TOKEN_STREAM;
+    assg_str_ptr(&file_str, _file_str);
+
+    do {
+        auto tkn = EMPTY_TOKEN;
+
+        skip_comments_n_whitespaces(&file_str);
+
+
+        tkn = reserved_word_state(&file_str);           if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = double_quoted_string_state(&file_str);    if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = single_quoted_string_state(&file_str);    if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = shy_identifier_state(&file_str);          if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = loud_identifier_state(&file_str);         if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = number_state(&file_str);                  if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = single_char_state(&file_str);             if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = bracket_open_state(&file_str);            if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = bracket_close_state(&file_str);           if (tkn._type != INVALID_STATE) goto push_to_stream;
+        tkn = literal_state(&file_str);                 if (tkn._type != INVALID_STATE) goto push_to_stream;
+
+        //TODO add logger to signalise an encounter with an illegal sequence
+        (void) advance_char(&file_str);
+        continue;
+
+        push_to_stream:
+        appendt_tkn_stream(&token_stream, tkn);
+
+    } while (gchar(&file_str) != '\0');
+
+    return token_stream;
+}
+
+
 
 
 
