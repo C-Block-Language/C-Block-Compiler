@@ -126,3 +126,27 @@ static TOKEN literal_state(STR_PTR *_spos) {
 
 
 
+static TOKEN single_char_state(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+
+    switch (advance_char(&e_pos)) {
+        default:
+            return EMPTY_TOKEN;
+
+        case '\\': case '#':                                // macro linebreak, hashtag
+        case ':': case ';': case '.': case ',':             // colon, semicolon, dot & comma
+        case '+': case '-': case '*': case '/': case '%':   // arithmetic operators
+        case '=':                                           // equal sign
+        case '@':                                           // for selectors & inline starters
+        case '^': case '~':                                 // relative & local position symbols
+        case '!':                                           // negation symbol
+        case '<': case '>':                                 // basic comparisons
+            break;
+    }
+
+    return return_tkn(SINGLE_CHAR, _spos, e_pos);
+
+}
+
+
+
