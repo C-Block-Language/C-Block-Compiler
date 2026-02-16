@@ -218,3 +218,39 @@ static TOKEN single_quoted_string_state(STR_PTR* _spos) {
 
 
 
+static TOKEN double_quoted_string_state(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+
+    if (advance_char(&e_pos) != '"') return EMPTY_TOKEN;
+
+    bool end_quote_found = false;
+    do {
+        jump_n_seek(&e_pos, 2, '\\', '"');
+        switch (advance_char(&e_pos)) {
+            case '\\':
+                (void) advance_char(&e_pos);
+                continue;
+
+            default:
+                assert(false);                  /* Should never happen! */
+
+            case '\0': case '"':
+                end_quote_found = true;
+        }
+    } while (end_quote_found == false);
+
+
+    (void) recoil_char(&e_pos);             // advance once on start pointer
+    (void) advance_char(_spos);             // & recoil on end to crop the quotation marks.
+
+    auto tkn = return_tkn(DOUBLE_QUOTED_STRING, _spos, e_pos);
+
+    (void) recoil_char(&tkn._fpos);         // recoil the pointer to the tkn file pos to start on the quotation mark
+    (void) advance_char(_spos);             // & advance the arg pointer to skip the ending quote mark.
+
+    return tkn;
+
+}
+
+
+
