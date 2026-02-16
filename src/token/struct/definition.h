@@ -35,6 +35,7 @@ typedef struct {
 
 
 
+#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE}
 #endif
 
 
