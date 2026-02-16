@@ -150,3 +150,37 @@ static TOKEN single_char_state(STR_PTR* _spos) {
 
 
 
+static TOKEN bracket_open_state(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+
+    switch (advance_char(&e_pos)) {
+        default:
+            return EMPTY_TOKEN;
+
+        case '{': case '[': case '(':
+            break;
+    }
+
+    return return_tkn(BRACKET_OPEN, _spos, e_pos);
+
+}
+
+
+
+static TOKEN bracket_close_state(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+
+    switch (advance_char(&e_pos)) {
+        default:
+            return EMPTY_TOKEN;
+
+        case '}': case ']': case ')':
+            break;
+    }
+
+    return return_tkn(BRACKET_CLOSE, _spos, e_pos);
+
+}
+
+
+
