@@ -5,7 +5,7 @@
 
 
 #include <stdio.h>
-#include "../string_struct.h"
+#include "../string.h"
 
 #define PAGE_SIZE 4096
 
