@@ -24,6 +24,11 @@ target_sources(C_BLOCK_COMPILER PRIVATE
 
 
 
+        # Log signal
+        src/log_signal.h
+
+
+
         # File utils
         src/file/utils.h
         src/file/utils.c
