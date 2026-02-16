@@ -59,3 +59,29 @@ TOKEN reserved_word_state(STR_PTR *_spos) {
 
 
 
+static TOKEN shy_identifier_state(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    char c = advance_char(&e_pos);
+    // cries in Sensei senseisness wisdom
+    // according to crec, it is the wrong equality :pepelaugh:
+    // amount of lapsus brutus crec had today: 3 (2026/feb/14)
+    if (('a' > c || c > 'z') && c != '_') return EMPTY_TOKEN;
+
+
+    while (true) {
+        c = advance_char(&e_pos);
+        // cries in Sensei senseisness wisdom
+        if (c == '_' || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9')) continue;
+        break;
+    }
+
+    // cries in Sensei senseisness wisdom
+    if ('A' <= c && c <= 'Z') return EMPTY_TOKEN;
+    (void) recoil_char(&e_pos);
+    return return_tkn(SHY_IDENTIFIER, _spos, e_pos);
+
+}
+
+
+
