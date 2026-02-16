@@ -18,3 +18,44 @@ static TOKEN return_tkn(const TKN_TYPE type, STR_PTR* s_pos, const STR_PTR e_pos
 }
 
 
+
+TOKEN reserved_word_state(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    char c = advance_char(&e_pos);
+    if (('a' > c || c > 'z') && ('A' > c || c > 'Z') && c != '_') return EMPTY_TOKEN;
+
+    while (true) {
+        c = advance_char(&e_pos);
+        // cries in Sensei senseisness wisdom
+        if (c == '_' || ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9')) continue;
+        break;
+    }
+
+    (void) recoil_char(&e_pos);
+
+
+    auto tkn = EMPTY_TOKEN;
+    auto str = EMPTY_STR;
+    (void) str_ptrt_struct(&str, _spos, &e_pos);
+
+    for (size_t i = 0; i < reserved_words_count; ++i) {
+        if (compare_strings(&str, &reserved_words[i]) == OK) goto success;
+    }
+
+ // fail:
+    free_string(&str);
+    return EMPTY_TOKEN;
+
+    success:
+    tkn._fpos = *_spos;
+    tkn._type = RESERVED_WORD;
+    tkn._str = str;
+
+    *_spos = e_pos;
+
+    return tkn;
+}
+
+
+
