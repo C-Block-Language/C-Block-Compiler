@@ -24,8 +24,11 @@ target_sources(C_BLOCK_COMPILER PRIVATE
 
 
 
-        # Log signal
+        # Main headers
+        src/string.h
+        src/token.h
         src/log_signal.h
+        src/file.h
 
 
 
