@@ -6,6 +6,24 @@
 
 #include "../../string/struct/definition.h"
 #include "../../string/pointer/definition.h"
+
+typedef enum {
+    INVALID_STATE,
+    RESERVED_WORD,
+    SHY_IDENTIFIER,
+    LOUD_IDENTIFIER,
+    LITERAL,
+    SINGLE_CHAR,
+    BRACKET_OPEN,
+    BRACKET_CLOSE,
+    SINGLE_QUOTED_STRING,
+    DOUBLE_QUOTED_STRING,
+    NUMBER
+} TKN_TYPE;
+
+
+
+
 /**
  * @brief The minimal unit that the compiler understands
  */
