@@ -107,3 +107,22 @@ static TOKEN loud_identifier_state(STR_PTR *_spos) {
 
 
 
+static TOKEN literal_state(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    char c = advance_char(&e_pos);
+    if (('a' > c || c > 'z') && ('A' > c || c > 'Z') && c != '_') return EMPTY_TOKEN;
+
+    while (true) {
+        c = advance_char(&e_pos);
+        // cries in Sensei senseisness wisdom
+        if (c == '_' || ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9')) continue;
+        break;
+    }
+
+    (void) recoil_char(&e_pos);
+    return return_tkn(LITERAL, _spos, e_pos);
+}
+
+
+
