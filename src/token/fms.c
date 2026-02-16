@@ -314,3 +314,61 @@ void skip_comments_n_whitespaces(STR_PTR *_spos) {
 
 
 
+static bool process_escaping_sequence(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+    switch (advance_char(&e_pos)) {
+        default:
+            // TODO add logger entry to specify a malformed escaping sequence
+            return false;
+
+        case 'b': case 'f': case 'n': case 'r':
+        case 's': case 't':
+        case '\\': case '\'': case '\"':
+            break;
+
+        case 'x':
+            for (uint8_t j = 0; j < 2; ++j) {
+                switch (advance_char(&e_pos)) {
+                    default:
+                        return false;
+                    case '0': case '1': case '2': case '3': case '4':
+                    case '5': case '6': case '7': case '8': case '9':
+                    case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+                    case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+                        break;
+                }
+            }
+            break;
+        case 'u':
+            for (uint8_t j = 0; j < 4; ++j) {
+                switch (advance_char(&e_pos)) {
+                    default:
+                        return false;
+                    case '0': case '1': case '2': case '3': case '4':
+                    case '5': case '6': case '7': case '8': case '9':
+                    case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+                    case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+                        break;
+                }
+            }
+            break;
+        case 'U':
+            for (uint8_t j = 0; j < 8; ++j) {
+                switch (advance_char(&e_pos)) {
+                    default:
+                        return false;
+                    case '0': case '1': case '2': case '3': case '4':
+                    case '5': case '6': case '7': case '8': case '9':
+                    case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+                    case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+                        break;
+                }
+            }
+            break;
+    }
+    *_spos = e_pos;
+    return true;
+
+}
+
+
