@@ -70,6 +70,17 @@ target_sources(C_BLOCK_COMPILER PRIVATE
         # Token Finite State Machine
         src/token/fms.h
         src/token/fms.c
+
+
+
+        # Token stream pointer
+        src/token/stream_pointer.h
+        src/token/stream_pointer/definition.h
+        src/token/stream_pointer/operations.h
+        src/token/stream_pointer/operations.c
+
+
+
 )
 
 
