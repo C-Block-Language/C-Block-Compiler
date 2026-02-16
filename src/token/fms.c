@@ -184,3 +184,37 @@ static TOKEN bracket_close_state(STR_PTR* _spos) {
 
 
 
+static TOKEN single_quoted_string_state(STR_PTR* _spos) {
+    auto e_pos = *_spos;
+
+    if (advance_char(&e_pos) != '\'') return EMPTY_TOKEN;
+
+    bool end_quote_found = false;
+    do {
+        switch (advance_char(&e_pos)) {
+            case '\\':
+                if (process_escaping_sequence(&e_pos) == false) end_quote_found = true;
+                break;
+            case '\0':
+            case '\n':
+            default:
+                // TODO add logger to signalise malformed single quoted string
+            case '\'':
+                end_quote_found = true;
+        }
+    } while (end_quote_found == false);
+
+    (void) recoil_char(&e_pos);         // advance once on start
+    (void) advance_char(_spos);         // & recoil on end to crop the quotation marks
+
+    auto tkn = return_tkn(SINGLE_QUOTED_STRING, _spos, e_pos);
+
+    (void) recoil_char(&tkn._fpos);     //
+    (void) advance_char(_spos);         // advance the pointer to skip the ending quote mark
+
+    return tkn;
+
+}
+
+
+
