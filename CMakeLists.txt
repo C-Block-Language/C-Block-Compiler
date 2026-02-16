@@ -56,6 +56,14 @@ target_sources(C_BLOCK_COMPILER PRIVATE
         src/token/struct/definition.h
         src/token/struct/operations.h
         src/token/struct/operations.c
+
+
+
+        # Token stream
+        src/token/stream.h
+        src/token/stream/definition.h
+        src/token/stream/operations.h
+        src/token/stream/operations.c
 )
 
 
