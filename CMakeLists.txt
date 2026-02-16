@@ -24,6 +24,9 @@ target_sources(C_BLOCK_COMPILER PRIVATE
 
 
 
+        # File utils
+        src/file/utils.h
+        src/file/utils.c
 
 
 
