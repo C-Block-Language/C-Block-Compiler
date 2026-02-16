@@ -17,19 +17,6 @@ typedef struct {
 
 
 
-typedef enum {
-    /// Good to continue.
-    OK,
-
-    /// Error, can't continue.
-    ERR,
-
-    /// memory allocation error
-    ERR_MEM,
-
-    /// Strings are not equal.
-    DIFF
-} STR_LOG;
 
 
 

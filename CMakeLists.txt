@@ -30,6 +30,11 @@ target_sources(C_BLOCK_COMPILER PRIVATE
 
 
 
+        # String struct
+        src/string/struct.h
+        src/string/struct/definition.h
+        src/string/struct/operations.h
+        src/string/struct/operations.c
 )
 
 
