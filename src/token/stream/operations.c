@@ -39,3 +39,10 @@ LOG_SIGNAL appendt_tkn_stream(TOKEN_STREAM *_target_tkn_strm, const TOKEN _tkn) 
     return OK;
 }
 
+void op_on_all_tkns(TOKEN_STREAM *_target_tkn_strm, void(*_tkn_op)(TOKEN *)) {
+    for (size_t i = 0; i < _target_tkn_strm->_len; ++i) {
+        _tkn_op(&_target_tkn_strm->_toks[i]);
+    }
+}
+
+
