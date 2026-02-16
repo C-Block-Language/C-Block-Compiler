@@ -64,6 +64,12 @@ target_sources(C_BLOCK_COMPILER PRIVATE
         src/token/stream/definition.h
         src/token/stream/operations.h
         src/token/stream/operations.c
+
+
+
+        # Token Finite State Machine
+        src/token/fms.h
+        src/token/fms.c
 )
 
 
