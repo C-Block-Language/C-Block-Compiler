@@ -85,3 +85,25 @@ static TOKEN shy_identifier_state(STR_PTR *_spos) {
 
 
 
+static TOKEN loud_identifier_state(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    char c = advance_char(&e_pos);
+    if (('A' > c || c > 'Z') && c != '_') return EMPTY_TOKEN;
+
+    while (true) {
+        c = advance_char(&e_pos);
+        // cries in Sensei senseisness wisdom
+        if (c == '_' || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9')) continue;
+        break;
+    }
+
+    // cries in Sensei senseisness wisdom
+    if ('a' <= c && c <= 'z') return EMPTY_TOKEN;
+
+    recoil_char(&e_pos);
+    return return_tkn(LOUD_IDENTIFIER, _spos, e_pos);
+}
+
+
+
