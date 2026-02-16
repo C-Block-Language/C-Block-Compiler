@@ -254,3 +254,23 @@ static TOKEN double_quoted_string_state(STR_PTR* _spos) {
 
 
 
+TOKEN number_state(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    auto c = advance_char(&e_pos);
+    if ('0' > c || c > '9') return EMPTY_TOKEN;
+
+
+    while (true) {
+        c = advance_char(&e_pos);
+        if (c == '_' || ('0' <= c && c <= '9')) continue;
+        break;
+    }
+
+    (void) recoil_char(&e_pos);
+    return return_tkn(LITERAL, _spos, e_pos);
+
+}
+
+
+
