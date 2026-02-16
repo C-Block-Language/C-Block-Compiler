@@ -274,3 +274,43 @@ TOKEN number_state(STR_PTR *_spos) {
 
 
 
+void skip_comments_n_whitespaces(STR_PTR *_spos) {
+    auto e_pos = *_spos;
+
+    start:
+    switch (advance_char(&e_pos)) {
+        case ' ': case '\t': case '\n':
+            jump_n_skip(&e_pos, 3, ' ', '\t', '\n');
+            goto start;
+        case '/':
+            break;
+        default:
+            goto end;
+    }
+
+    switch (advance_char(&e_pos)) {
+        case '*':
+            while (true) {
+                jump_n_seek(&e_pos, 1, '*');
+                (void) advance_char(&e_pos);
+                if (advance_char(&e_pos) == '/') break;
+                if (gchar(&e_pos) == '\0') break;
+            }
+            break;
+        case '/':
+            next_line(&e_pos);
+            break;
+        default:
+            (void) recoil_char(&e_pos);
+            goto end;
+    }
+    goto start;
+
+    end:
+    (void) recoil_char(&e_pos);
+    *_spos = e_pos;
+
+}
+
+
+
