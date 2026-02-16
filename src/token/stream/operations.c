@@ -25,3 +25,17 @@ LOG_SIGNAL tkn_stream_reserve(TOKEN_STREAM *_target_tkn_strm, const size_t _size
 
     return OK;
 }
+
+
+
+
+LOG_SIGNAL appendt_tkn_stream(TOKEN_STREAM *_target_tkn_strm, const TOKEN _tkn) {
+    const auto length = &_target_tkn_strm->_len;
+
+    if (tkn_stream_reserve(_target_tkn_strm, *length + 1) == ERR_MEM) return ERR_MEM;
+    _target_tkn_strm->_toks[*length] = _tkn;
+    ++*length;
+
+    return OK;
+}
+
