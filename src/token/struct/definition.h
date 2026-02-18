@@ -87,6 +87,9 @@ const static STRING reserved_words[] = {
     STATIC_STR("long"),
     STATIC_STR("float"),
     STATIC_STR("double"),
+
+    // reserve int_cast for casting NBT values to ints
+    STATIC_STR("int_cast"),
 };
 
 
