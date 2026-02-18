@@ -70,9 +70,9 @@ target_sources(C_BLOCK_COMPILER PRIVATE
 
 
 
-        # Token Finite State Machine
-        src/token/fms.h
-        src/token/fms.c
+        # Token Automata
+        src/token/automata.h
+        src/token/automata.c
 
 
 

@@ -2,14 +2,14 @@
 
 #include "../file/utils.h"
 #include "stream/operations.h"
-#include "fms.h"
+#include "automata.h"
 
 #include <assert.h>
 #include <stdint.h>
 
 
 
-TOKEN_STREAM tokenisator_fsm(STRING *_file_str) {
+TOKEN_STREAM tokenisator_automata(STRING *_file_str) {
     auto file_str = NULL_STR_PTR;
     auto token_stream = EMPTY_TOKEN_STREAM;
     assg_str_ptr(&file_str, _file_str);

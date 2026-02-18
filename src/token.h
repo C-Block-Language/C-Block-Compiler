@@ -14,7 +14,7 @@
  * @param _file_str file string to be tokenised
  * @returns a token stream that contains all legal tokens.
  */
-TOKEN_STREAM tokenisator_fsm(STRING* _file_str);
+TOKEN_STREAM tokenisator_automata(STRING* _file_str);
 
 
 
