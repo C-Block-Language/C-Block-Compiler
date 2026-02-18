@@ -26,7 +26,7 @@ void free_token(TOKEN* _target_tkn);
 TKN_TYPE tkn_type(const TOKEN* _target_tkn);
 
 
-
+void debug_token_print(TOKEN* _target_tkn);
 
 #endif
 
