@@ -78,7 +78,15 @@ const static STRING reserved_words[] = {
     STATIC_STR("merge"),
     STATIC_STR("prepend"),
     STATIC_STR("set"),
-    STATIC_STR("remove")
+    STATIC_STR("remove"),
+
+    // reserve NBT numeric data types
+    STATIC_STR("byte"),
+    STATIC_STR("short"),
+    STATIC_STR("int"),
+    STATIC_STR("long"),
+    STATIC_STR("float"),
+    STATIC_STR("double"),
 };
 
 
