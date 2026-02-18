@@ -93,6 +93,12 @@ const static STRING reserved_words[] = {
 
     // reserve constexp for compiler time expansion of certain
     STATIC_STR("consteval"),
+
+    // reserve cycle keywords
+    STATIC_STR("for"),
+    STATIC_STR("while"),
+    STATIC_STR("do"),
+
 };
 
 
