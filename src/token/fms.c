@@ -312,7 +312,7 @@ TOKEN number_state(STR_PTR *_spos) {
     }
 
     (void) recoil_char(&e_pos);
-    return return_tkn(LITERAL, _spos, e_pos);
+    return return_tkn(NUMBER, _spos, e_pos);
 
 }
 
