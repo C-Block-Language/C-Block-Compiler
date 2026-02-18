@@ -90,6 +90,9 @@ const static STRING reserved_words[] = {
 
     // reserve int_cast for casting NBT values to ints
     STATIC_STR("int_cast"),
+
+    // reserve constexp for compiler time expansion of certain
+    STATIC_STR("consteval"),
 };
 
 
