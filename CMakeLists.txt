@@ -81,6 +81,8 @@ add_executable(win32_build
         # Program start
         src/main.c
 
+        # System specific implementations
+        src/file/sys_ops/win32.c
 
 )
 
@@ -90,6 +92,8 @@ add_executable(unix_build
         # Program start
         src/main.c
 
+        # System specific implementations
+        src/file/sys_ops/unix.c
 
 )
 
