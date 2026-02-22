@@ -4,16 +4,6 @@ cmake_minimum_required(VERSION 4.1)
 
 project("C-Block Compiler" LANGUAGES C)
 
-add_executable(C_BLOCK_COMPILER)
-
-set_target_properties(C_BLOCK_COMPILER
-        PROPERTIES
-        LANGUAGE C
-        LINKER_LANGUAGE C
-        COMPILE_WARNING_AS_ERROR ON
-        C_STANDARD 23
-        C_STANDARD_REQUIRED ON
-)
 
 add_library(compiler_core
 
@@ -69,8 +59,8 @@ add_library(compiler_core
 
 
         # Token Finite State Machine
-        include/c_block/token/fms.h
-        src/token/fms.c
+        include/c_block/token/automata.h
+        src/token/automata.c
 
 
 

@@ -2,7 +2,7 @@
 
 #include "c_block/token.h"
 #include "c_block/string.h"
-#include "c_block/token/fms.h"
+#include "c_block/token/automata.h"
 
 
 #include <assert.h>
