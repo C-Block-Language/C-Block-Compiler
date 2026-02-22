@@ -4,7 +4,16 @@ cmake_minimum_required(VERSION 4.1)
 
 project("C-Block Compiler" LANGUAGES C)
 
+add_executable(C_BLOCK_COMPILER)
 
+set_target_properties(C_BLOCK_COMPILER
+        PROPERTIES
+        LANGUAGE C
+        LINKER_LANGUAGE C
+        COMPILE_WARNING_AS_ERROR ON
+        C_STANDARD 23
+        C_STANDARD_REQUIRED ON
+)
 
 add_library(compiler_core
 
@@ -75,25 +84,20 @@ add_library(compiler_core
 
 
 
-
 add_executable(win32_build
 
         # Program start
         src/main.c
 
-        # System specific implementations
-        src/file/sys_ops/win32.c
 
 )
+
 
 
 add_executable(unix_build
 
         # Program start
         src/main.c
-
-        # System specific implementations
-        src/file/sys_ops/unix.c
 
 )
 

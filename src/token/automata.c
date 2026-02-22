@@ -1,15 +1,16 @@
 
 
-#include "../file/utils.h"
-#include "stream/operations.h"
-#include "automata.h"
+#include "c_block/token.h"
+#include "c_block/string.h"
+#include "c_block/token/fms.h"
+
 
 #include <assert.h>
 #include <stdint.h>
 
 
 
-TOKEN_STREAM tokenisator_automata(STRING *_file_str) {
+TOKEN_STREAM tokenisator_fsm(STRING *_file_str) {
     auto file_str = NULL_STR_PTR;
     auto token_stream = EMPTY_TOKEN_STREAM;
     assg_str_ptr(&file_str, _file_str);
@@ -50,7 +51,6 @@ TOKEN_STREAM tokenisator_automata(STRING *_file_str) {
 static TOKEN return_tkn(const TKN_TYPE type, STR_PTR* s_pos, const STR_PTR e_pos) {
     auto tkn = EMPTY_TOKEN;
     auto str = EMPTY_STR;
-    /// TODO: add stop if returns `ERR_MEM`
     (void) str_ptrt_struct(&str, s_pos, &e_pos);
 
     tkn._fpos = *s_pos;
@@ -313,7 +313,7 @@ TOKEN number_state(STR_PTR *_spos) {
     }
 
     (void) recoil_char(&e_pos);
-    return return_tkn(NUMBER, _spos, e_pos);
+    return return_tkn(LITERAL, _spos, e_pos);
 
 }
 
