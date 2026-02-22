@@ -1,13 +1,108 @@
 
 
 cmake_minimum_required(VERSION 4.1)
-project(C_BLOCK_COMPILER)
+
+project("C-Block Compiler" LANGUAGES C)
 
 
 
-add_executable(C_BLOCK_COMPILER)
+add_library(compiler_core
 
-set_target_properties(C_BLOCK_COMPILER
+        # Log signal
+        include/c_block/log_signal.h
+
+
+
+        # File utils
+        include/c_block/file/utils.h
+
+        # Implementation specific wrapper headers
+        include/c_block/file/sys_ops.h
+
+
+        # File struct
+        include/c_block/file/struct/definition.h
+        include/c_block/file/struct/struct_operations.h
+        src/file/struct_operations.c
+
+
+
+        # String struct
+        include/c_block/string/struct.h
+        include/c_block/string/ptr_definition.h
+        include/c_block/string/struct_operations.h
+        src/string/struct_operations.c
+
+
+
+        # String pointer
+        include/c_block/string/pointer.h
+        include/c_block/string/struct_definition.h
+        include/c_block/string/ptr_operations.h
+        src/string/ptr_operations.c
+
+
+
+        # Token struct
+        include/c_block/token/struct.h
+        include/c_block/token/struct_definition.h
+        include/c_block/token/struct_operations.h
+        src/token/struct_operations.c
+
+
+
+        # Token stream
+        include/c_block/token/stream.h
+        include/c_block/token/stream/struct_definition.h
+        include/c_block/token/stream/struct_operations.h
+        src/token/stream/struct_operations.c
+
+
+
+        # Token Finite State Machine
+        include/c_block/token/fms.h
+        src/token/fms.c
+
+
+
+        # Token stream pointer
+        include/c_block/token/stream_pointer.h
+        include/c_block/token/stream/ptr_definition.h
+        include/c_block/token/stream/ptr_operations.h
+        src/token/stream/ptr_operations.c
+        include/c_block/file/struct.h
+)
+
+
+
+
+add_executable(win32_build
+
+        # Program start
+        src/main.c
+
+
+)
+
+
+add_executable(unix_build
+
+        # Program start
+        src/main.c
+
+
+)
+
+
+
+
+
+
+set_target_properties(
+        compiler_core
+        unix_build
+        win32_build
+
         PROPERTIES
         LANGUAGE C
         LINKER_LANGUAGE C
@@ -16,74 +111,8 @@ set_target_properties(C_BLOCK_COMPILER
         C_STANDARD_REQUIRED ON
 )
 
+include_directories(include)
 
-target_sources(C_BLOCK_COMPILER PRIVATE
-
-        # Program start
-        src/main.c
-
-
-
-        # Main headers
-        src/string.h
-        src/token.h
-        src/log_signal.h
-        src/file.h
-
-
-
-        # File utils
-        src/file/utils.h
-        src/file/utils.c
-
-
-
-        # String struct
-        src/string/struct.h
-        src/string/struct/definition.h
-        src/string/struct/operations.h
-        src/string/struct/operations.c
-
-
-
-        # String pointer
-        src/string/pointer.h
-        src/string/pointer/definition.h
-        src/string/pointer/operations.h
-        src/string/pointer/operations.c
-
-
-
-        # Token struct
-        src/token/struct.h
-        src/token/struct/definition.h
-        src/token/struct/operations.h
-        src/token/struct/operations.c
-
-
-
-        # Token stream
-        src/token/stream.h
-        src/token/stream/definition.h
-        src/token/stream/operations.h
-        src/token/stream/operations.c
-
-
-
-        # Token Automata
-        src/token/automata.h
-        src/token/automata.c
-
-
-
-        # Token stream pointer
-        src/token/stream_pointer.h
-        src/token/stream_pointer/definition.h
-        src/token/stream_pointer/operations.h
-        src/token/stream_pointer/operations.c
-
-
-
-)
-
+target_link_libraries(      unix_build      PUBLIC compiler_core    )
+target_link_libraries(      win32_build     PUBLIC compiler_core    )
 
