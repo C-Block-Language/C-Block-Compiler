@@ -11,9 +11,12 @@ add_library(compiler_core
         include/c_block/log_signal.h
 
 
-
-        # File utils
+        # File
+        include/c_block/file.h
         include/c_block/file/utils.h
+        include/c_block/file/allocator_definition.h
+        include/c_block/file/allocator_operations.h
+        src/file/allocator_operations.c
 
         # Implementation specific wrapper headers
         include/c_block/file/sys_ops.h
