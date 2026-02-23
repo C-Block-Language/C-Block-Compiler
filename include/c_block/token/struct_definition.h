@@ -4,9 +4,9 @@
 #define C_BLOCK_COMPILER_TOKEN_STRUCT_DEF_H
 
 
-#include "c_block/file/struct/definition.h"
 #include "c_block/string/ptr_definition.h"
 #include "c_block/string/struct_definition.h"
+#include "c_block/file/id_definition.h"
 
 
 typedef enum {
@@ -32,13 +32,13 @@ typedef enum {
 typedef struct {
     STR_PTR _fpos;
     STRING _str;
-    FILE_STRUCT _forigin;
+    FILE_ID _forigin;
     TKN_TYPE _type;
 } TOKEN;
 
 
 
-#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE, ._forigin = EMPTY_FILE_STRUCT}
+#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE, ._forigin = 0}
 
 
 const static STRING reserved_words[] = {

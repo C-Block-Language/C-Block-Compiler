@@ -6,15 +6,15 @@
 
 
 
-#include <stddef.h>
+
 
 #include "c_block/token/stream/struct_definition.h"
 #include "c_block/file/struct/definition.h"
 
 
-bool file_allocator__initialised = false;
+extern bool file_allocator__initialised;
 
-struct {
+extern struct FILE_ALLOC__ {
     FILE_STRUCT* _files;
     TOKEN_STREAM* _tkn_streams;
     size_t _buff;
@@ -23,7 +23,6 @@ struct {
 
 
 
-typedef size_t FILE_ID;
 
 
 

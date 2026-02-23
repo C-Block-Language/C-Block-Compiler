@@ -5,7 +5,6 @@
 #define C_BLOCK_COMPILER_TOKEN_STREAM_DEF_H
 
 
-
 #include "c_block/token/struct_definition.h"
 
 

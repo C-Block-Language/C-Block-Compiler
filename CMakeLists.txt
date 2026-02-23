@@ -14,6 +14,7 @@ add_library(compiler_core
         # File
         include/c_block/file.h
         include/c_block/file/utils.h
+        include/c_block/file/id_definition.h
         include/c_block/file/allocator_definition.h
         include/c_block/file/allocator_operations.h
         src/file/allocator_operations.c
