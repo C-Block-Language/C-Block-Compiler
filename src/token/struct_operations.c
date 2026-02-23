@@ -23,6 +23,7 @@ TKN_TYPE tkn_type(const TOKEN* _target_tkn) {
 void debug_token_print(/* const */ TOKEN* _target_tkn) {
     const auto str = _target_tkn->_str._str;
     const auto type = _target_tkn->_type;
+    const auto origin = _target_tkn->_forigin._f_name._str;
     const auto fpos_line = _target_tkn->_fpos._line;
     const auto fpos_column = _target_tkn->_fpos._column;
 
@@ -63,7 +64,7 @@ void debug_token_print(/* const */ TOKEN* _target_tkn) {
             break;
     }
 
-    printf("{ token_type: %s, pos_in_file: %zu::%zu, content:\n%s}\n\n", type_s,fpos_line,fpos_column,str);
+    printf("{ token_type: %s, on_file: %s:%zu:%zu, content:\n%s}\n\n", type_s,origin,fpos_line,fpos_column,str);
 
 }
 

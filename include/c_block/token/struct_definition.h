@@ -4,6 +4,7 @@
 #define C_BLOCK_COMPILER_TOKEN_STRUCT_DEF_H
 
 
+#include "c_block/file/struct/definition.h"
 #include "c_block/string/ptr_definition.h"
 #include "c_block/string/struct_definition.h"
 
@@ -32,11 +33,12 @@ typedef struct {
     STR_PTR _fpos;
     STRING _str;
     TKN_TYPE _type;
+    FILE_STRUCT _forigin;
 } TOKEN;
 
 
 
-#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE}
+#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE, ._forigin = EMPTY_FILE_STRUCT}
 
 
 const static STRING reserved_words[] = {
