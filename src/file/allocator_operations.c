@@ -68,7 +68,7 @@ FILE_ID process_file(const STRING* _file_name) {
 
  // add file to allocator:
 
-    file_id = file_allocator._len + 1;
+    file_id = file_allocator._len;
 
     if (alloc_reserve(file_allocator._len + 1) != OK) {
         printf("Unrecoverable reallocation, can't continue with compilation (check if you did not run out of RAM or something :/)");

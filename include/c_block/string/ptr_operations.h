@@ -3,7 +3,6 @@
 #ifndef C_BLOCK_COMPILER_STRING_POINTER_OPS_H
 #define C_BLOCK_COMPILER_STRING_POINTER_OPS_H
 
-#include <stdint.h>
 #include "c_block/string/ptr_definition.h"
 
 

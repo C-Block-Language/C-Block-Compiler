@@ -3,9 +3,9 @@
 #define C_BLOCK_COMPILER_TOKEN_H
 
 
-#include "file/struct/definition.h"
-#include "token/struct.h"
-#include "token/stream.h"
+#include "c_block/file/struct/definition.h"
+#include "c_block/token/struct.h"
+#include "c_block/token/stream.h"
 
 
 /**
