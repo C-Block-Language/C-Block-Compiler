@@ -59,7 +59,7 @@ LOG_SIGNAL read_file(FILE_STRUCT* _target_file, const STRING* _f_name) {
     _target_file->_f_content = file_str;
     _target_file->_f_name = file_name;
 
-
+    fclose(file_ptr);
 
     return OK;
 }
