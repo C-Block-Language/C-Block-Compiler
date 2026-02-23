@@ -1,6 +1,5 @@
 
 
-
 #include <stdlib.h>
 
 #include "c_block/file/sys_ops.h"
@@ -13,6 +12,8 @@ STRING get_absolute_path(const STRING* _fname_str) {
     // Or.... have fun your date with CMake & crosscompiling!
     //                                                                      -- CosmicAxolotl, 2026.
     char* str = realpath(_fname_str->_str, nullptr);
+
+    if (str == nullptr) return EMPTY_STR;
 
     auto str_struct = EMPTY_STR;
     char_arrt_struct(&str_struct, str);
