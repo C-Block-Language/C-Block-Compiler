@@ -3,7 +3,7 @@
 #define C_BLOCK_COMPILER_STRING_STRUCT_DEF_H
 
 
-#include <stdint.h>
+#include <stddef.h>
 
 
 /**
