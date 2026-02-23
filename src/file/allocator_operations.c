@@ -9,6 +9,10 @@
 #include "c_block/file/struct/struct_operations.h"
 #include "c_block/string/struct_operations.h"
 
+bool file_allocator__initialised = false;
+
+struct FILE_ALLOC__ file_allocator;
+
 
 static bool find_file_on_allocator(const STRING _fname, FILE_ID* file_id) {
     if (file_allocator._len == 0) return false;
@@ -77,7 +81,7 @@ FILE_ID process_file(const STRING* _file_name) {
         abort();
     }
 
-    const auto token_stream = tokenisator_automata(&file_struct);
+    const auto token_stream = tokenisator_automata(&file_struct, file_id);
 
     file_allocator._files[file_id] = file_struct;
     file_allocator._tkn_streams[file_id] = token_stream;
@@ -89,8 +93,12 @@ FILE_ID process_file(const STRING* _file_name) {
 
 
 
+FILE_STRUCT get_file_struct(const FILE_ID _file_id) {
+    return file_allocator._files[_file_id];
+}
 
-inline void initialise_file_allocator() {
+
+void initialise_file_allocator() {
     if (file_allocator__initialised == true) return;
 
     file_allocator__initialised = true;
@@ -103,4 +111,6 @@ inline void initialise_file_allocator() {
 }
 
 
-
+TOKEN_STREAM get_token_stream(const FILE_ID _file_id) {
+    return file_allocator._tkn_streams[_file_id];
+}

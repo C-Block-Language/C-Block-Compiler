@@ -11,7 +11,7 @@
 #include "c_block/file/struct/definition.h"
 
 
-TOKEN_STREAM tokenisator_automata(FILE_STRUCT* _file) {
+TOKEN_STREAM tokenisator_automata(FILE_STRUCT* _file, FILE_ID _id) {
     auto file_str = NULL_STR_PTR;
     auto token_stream = EMPTY_TOKEN_STREAM;
     assg_str_ptr(&file_str, &_file->_f_content);
@@ -39,7 +39,7 @@ TOKEN_STREAM tokenisator_automata(FILE_STRUCT* _file) {
 
 
         push_to_stream:
-        tkn._forigin = *_file;
+        tkn._forigin = _id;
         appendt_tkn_stream(&token_stream, tkn);
 
     } while (gchar(&file_str) != '\0');
