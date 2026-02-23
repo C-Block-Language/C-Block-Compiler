@@ -8,12 +8,13 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "c_block/file/struct/definition.h"
 
 
-TOKEN_STREAM tokenisator_fsm(STRING *_file_str) {
+TOKEN_STREAM tokenisator_automata(FILE_STRUCT* _file) {
     auto file_str = NULL_STR_PTR;
     auto token_stream = EMPTY_TOKEN_STREAM;
-    assg_str_ptr(&file_str, _file_str);
+    assg_str_ptr(&file_str, &_file->_f_content);
 
     do {
         auto tkn = EMPTY_TOKEN;
@@ -36,7 +37,9 @@ TOKEN_STREAM tokenisator_fsm(STRING *_file_str) {
         (void) advance_char(&file_str);
         continue;
 
+
         push_to_stream:
+        tkn._forigin = *_file;
         appendt_tkn_stream(&token_stream, tkn);
 
     } while (gchar(&file_str) != '\0');
