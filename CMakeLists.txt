@@ -89,6 +89,9 @@ add_executable(unix_build
         # Program start
         src/main.c
 
+        # system specific operation implementations
+        src/file/sys_ops/unix.c
+
 )
 
 
