@@ -32,8 +32,8 @@ typedef enum {
 typedef struct {
     STR_PTR _fpos;
     STRING _str;
-    TKN_TYPE _type;
     FILE_STRUCT _forigin;
+    TKN_TYPE _type;
 } TOKEN;
 
 
