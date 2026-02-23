@@ -14,7 +14,7 @@
  * @param _f_name name of the relative path field of the file.
  * @returns OK if successful, an FERR signal otherwise.
  */
-LOG_SIGNAL read_file(FILE_STRUCT* _target_file, STRING* _f_name);
+LOG_SIGNAL read_file(FILE_STRUCT* _target_file, const STRING* _f_name);
 
 
 
