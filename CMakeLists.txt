@@ -10,10 +10,18 @@ add_library(compiler_core
         # Log signal
         include/c_block/log_signal.h
 
+        # Pack Build parser
+        src/pack_build_parser.c
+        include/c_block/pack_build_parser.h
 
 
-        # File utils
+        # File
+        include/c_block/file.h
         include/c_block/file/utils.h
+        include/c_block/file/id_definition.h
+        include/c_block/file/allocator_definition.h
+        include/c_block/file/allocator_operations.h
+        src/file/allocator_operations.c
 
         # Implementation specific wrapper headers
         include/c_block/file/sys_ops.h
@@ -70,6 +78,7 @@ add_library(compiler_core
         include/c_block/token/stream/ptr_operations.h
         src/token/stream/ptr_operations.c
         include/c_block/file/struct.h
+
 )
 
 
@@ -88,6 +97,9 @@ add_executable(unix_build
 
         # Program start
         src/main.c
+
+        # system specific operation implementations
+        src/file/sys_ops/unix.c
 
 )
 

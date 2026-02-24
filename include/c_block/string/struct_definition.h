@@ -3,16 +3,16 @@
 #define C_BLOCK_COMPILER_STRING_STRUCT_DEF_H
 
 
-#include <stdint.h>
+#include <stddef.h>
 
 
 /**
  * @brief An abstraction of char arrays ready for arbitrary long strings.
  */
 typedef struct {
-    char* _str;
     size_t _len;
     size_t _buff;
+    char* _str;
 } STRING;
 
 

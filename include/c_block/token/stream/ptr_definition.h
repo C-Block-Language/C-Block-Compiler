@@ -14,7 +14,7 @@ typedef struct {
     size_t _index;
 } TKN_STREAM_PTR;
 
-#define NULL_TOKEN_STREAM_PTR (TKN_STREAM_PTR) {_tkn_strm = nullptr, _index = 0}
+#define NULL_TOKEN_STREAM_PTR (TKN_STREAM_PTR) {._tkn_strm = nullptr, ._index = 0}
 
 #endif
 

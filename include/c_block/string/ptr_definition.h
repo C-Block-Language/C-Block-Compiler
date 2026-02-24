@@ -21,7 +21,6 @@ typedef struct {
 /**
  * @brief An initialiser macro helper for a null string pointer.
  */
-
 #define NULL_STR_PTR (STR_PTR){._str_struct = nullptr, ._index = 0, ._line = 1, ._column = 1}
 
 

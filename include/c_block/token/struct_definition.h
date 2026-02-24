@@ -6,6 +6,7 @@
 
 #include "c_block/string/ptr_definition.h"
 #include "c_block/string/struct_definition.h"
+#include "c_block/file/id_definition.h"
 
 
 typedef enum {
@@ -31,12 +32,13 @@ typedef enum {
 typedef struct {
     STR_PTR _fpos;
     STRING _str;
+    FILE_ID _forigin;
     TKN_TYPE _type;
 } TOKEN;
 
 
 
-#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE}
+#define EMPTY_TOKEN (TOKEN) {._fpos = NULL_STR_PTR, ._str = EMPTY_STR, ._type = INVALID_STATE, ._forigin = 0}
 
 
 const static STRING reserved_words[] = {
