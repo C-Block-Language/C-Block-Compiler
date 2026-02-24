@@ -22,7 +22,7 @@ extern struct FILE_ALLOC__ {
 } file_allocator;
 
 
-
+#define NULL_FILE (FILE_ID) 0
 
 
 

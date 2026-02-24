@@ -38,7 +38,7 @@ typedef struct {
 
 
 
-#define EMPTY_TOKEN (TOKEN) {._fpos = NULL, ._str = nullptr, ._type = INVALID_STATE, ._forigin = 0}
+#define EMPTY_TOKEN (TOKEN) {._fpos = NULL_STR_PTR, ._str = EMPTY_STR, ._type = INVALID_STATE, ._forigin = 0}
 
 
 const static STRING reserved_words[] = {

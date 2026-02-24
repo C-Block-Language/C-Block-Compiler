@@ -63,7 +63,7 @@ static LOG_SIGNAL alloc_reserve(const size_t _size) {
 
 
 FILE_ID process_file(const STRING* _file_name) {
-    FILE_ID file_id = 0;
+    FILE_ID file_id = NULL_FILE;
     if (find_file_on_allocator(*_file_name, &file_id) == true) return file_id;
 
  // add file to allocator:
@@ -81,14 +81,14 @@ FILE_ID process_file(const STRING* _file_name) {
         abort();
     }
 
-    const auto token_stream = tokenisator_automata(&file_struct, file_id);
+    const auto token_stream = tokenisator_automata(&file_struct, file_id + 1);
 
     file_allocator._files[file_id] = file_struct;
     file_allocator._tkn_streams[file_id] = token_stream;
 
     ++file_allocator._len;
 
-    return file_id;
+    return file_id + 1;
 }
 
 

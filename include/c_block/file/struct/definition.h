@@ -14,7 +14,7 @@ typedef struct {
     /* string with the file content */  STRING _f_content;
 } FILE_STRUCT;
 
-#define EMPTY_FILE_STRUCT (FILE_STRUCT) {._f_name = nullptr, ._f_content = nullptr}
+#define EMPTY_FILE_STRUCT (FILE_STRUCT) {._f_name = EMPTY_STR, ._f_content = EMPTY_STR}
 
 #endif
 

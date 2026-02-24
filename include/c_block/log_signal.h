@@ -17,8 +17,13 @@ typedef enum {
     /// Strings are not equal.
     STR_DIFF,
 
-    /// Couldn't open file
-    FERR_OPEN
+    /// Couldn't open file.
+    FERR_OPEN,
+
+    /// Couldn't find something.
+    ERR_NOT_FOUND
+
+
 } LOG_SIGNAL;
 
 #endif

@@ -15,7 +15,7 @@
 
 
 
-inline void file_to_str_struct(FILE* _file, STRING* _target_struct) {
+static void file_to_str_struct(FILE* _file, STRING* _target_struct) {
     fseek(_file, 0, SEEK_SET);
 
     while (!feof(_file)) {
