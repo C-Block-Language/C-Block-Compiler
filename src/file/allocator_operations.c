@@ -17,8 +17,8 @@ struct FILE_ALLOC__ file_allocator;
 static bool find_file_on_allocator(const STRING _fname, FILE_ID* file_id) {
     if (file_allocator._len == 0) return false;
 
-    for (size_t i = 0; i < file_allocator._len; ++i) {
-        if (compare_strings(&file_allocator._files[i]._f_name, &_fname) == false)
+    for (size_t i = 1; i < file_allocator._len; ++i) {
+        if (compare_strings(&file_allocator._files[i - 1]._f_name, &_fname) == false)
             continue;
 
         *file_id = i;
@@ -71,14 +71,13 @@ FILE_ID process_file(const STRING* _file_name) {
     file_id = file_allocator._len;
 
     if (alloc_reserve(file_allocator._len + 1) != OK) {
-        printf("Unrecoverable reallocation, can't continue with compilation (check if you did not run out of RAM or something :/)");
+        printf("[ALLOC::ERROR] Unrecoverable reallocation error, can't continue with compilation (check if you did not run out of RAM or something :/)");
         abort();
     }
 
     auto file_struct = EMPTY_FILE_STRUCT;
     if (read_file(&file_struct, _file_name) != OK) {
-        printf("Couldn't open file: %s", _file_name->_str);
-        abort();
+        return NULL_FILE;
     }
 
     const auto token_stream = tokenisator_automata(&file_struct, file_id + 1);
@@ -94,7 +93,8 @@ FILE_ID process_file(const STRING* _file_name) {
 
 
 FILE_STRUCT get_file_struct(const FILE_ID _file_id) {
-    return file_allocator._files[_file_id];
+    if (_file_id == NULL_FILE) return EMPTY_FILE_STRUCT;
+    return file_allocator._files[_file_id - 1];
 }
 
 
@@ -112,5 +112,9 @@ void initialise_file_allocator() {
 
 
 TOKEN_STREAM get_token_stream(const FILE_ID _file_id) {
-    return file_allocator._tkn_streams[_file_id];
+    if (_file_id == NULL_FILE) return EMPTY_TOKEN_STREAM;
+    return file_allocator._tkn_streams[_file_id - 1];
 }
+
+
+

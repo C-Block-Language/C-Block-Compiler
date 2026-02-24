@@ -10,6 +10,10 @@ add_library(compiler_core
         # Log signal
         include/c_block/log_signal.h
 
+        # Pack Build parser
+        src/pack_build_parser.c
+        include/c_block/pack_build_parser.h
+
 
         # File
         include/c_block/file.h
@@ -74,6 +78,7 @@ add_library(compiler_core
         include/c_block/token/stream/ptr_operations.h
         src/token/stream/ptr_operations.c
         include/c_block/file/struct.h
+
 )
 
 
