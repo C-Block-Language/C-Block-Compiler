@@ -247,6 +247,7 @@ static TOKEN single_quoted_string_state(STR_PTR* _spos) {
             case '\n':
             default:
                 // TODO add logger to signalise malformed single quoted string
+                break;
             case '\'':
                 end_quote_found = true;
         }
